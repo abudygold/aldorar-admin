@@ -1,12 +1,19 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-root',
 	imports: [RouterOutlet],
-	templateUrl: './app.html',
-	styleUrl: './app.css',
+	template: `<router-outlet />`,
 })
 export class App {
-	protected readonly title = signal('aldorar-admin');
+	#translate = inject(TranslateService);
+
+	constructor() {
+		const language = localStorage?.getItem('aldorar.language') ?? 'id';
+
+		this.#translate.setFallbackLang(language);
+		this.#translate.use(language);
+	}
 }

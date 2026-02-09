@@ -3,3 +3,41 @@
 @import 'tailwindcss';
 /* You can add global styles to this file, and also import other style files */
 @config "../../tailwind.config.js";
+
+/* CKEditor 5 Styles */
+@import 'ckeditor5/ckeditor5.css';
+
+@import './ckeditor.css';
+
+@theme {
+	--color-primary_c: #0f6b4d; /* Tailwind automatically generates utility classes like bg-primary */
+	--color-secondary_c: #b08441; /* Tailwind automatically generates utility classes like bg-primary */
+}
+
+:root {
+	--primary-color: #0f6b4d;
+	--secondary-color: #b08441;
+}
+
+body {
+	margin: 0;
+	font-family: Inter, 'Helvetica Neue', sans-serif;
+}
+
+::-webkit-scrollbar {
+	width: 4px;
+}
+
+::-webkit-scrollbar-track {
+	background: #f1f1f1;
+	border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: var(--mat-sys-primary);
+	border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: var(--mat-sys-primary);
+}

@@ -1,0 +1,177 @@
+.ck-editor__editable_inline {
+	min-height: 400px; /* Adjust as needed */
+	max-height: 600px; /* Optional: adds a scrollbar */
+}
+
+.ck.ck-content {
+	font-family:
+		'Inter',
+		system-ui,
+		-apple-system,
+		BlinkMacSystemFont,
+		sans-serif;
+	font-size: 14px;
+	line-height: 1.75;
+	color: #2b2b2b;
+}
+.ck.ck-content .text-tiny {
+	font-size: 0.7em;
+}
+.ck.ck-content .text-small {
+	font-size: 0.85em;
+}
+.ck.ck-content .text-big {
+	font-size: 1.4em;
+}
+.ck.ck-content .text-huge {
+	font-size: 1.8em;
+}
+.ck.ck-content h1,
+.ck.ck-content h2,
+.ck.ck-content h3,
+.ck.ck-content h4,
+.ck.ck-content h5,
+.ck.ck-content h6 {
+	font-family: inherit;
+	font-weight: 500;
+	line-height: 1.1;
+	color: inherit;
+}
+.ck.ck-content h1,
+.ck.ck-content h2,
+.ck.ck-content h3 {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.ck.ck-content h4,
+.ck.ck-content h5,
+.ck.ck-content h6 {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.ck.ck-content h1 {
+	font-size: 36px;
+}
+.ck.ck-content h2 {
+	font-size: 30px;
+}
+.ck.ck-content h3 {
+	font-size: 24px;
+}
+.ck.ck-content h4 {
+	font-size: 18px;
+}
+.ck.ck-content h5 {
+	font-size: 14px;
+}
+.ck.ck-content h6 {
+	font-size: 12px;
+}
+.ck.ck-content p {
+	margin: 0 0 10px;
+}
+.ck.ck-content strong {
+	font-weight: 700;
+}
+.ck.ck-content em {
+	font-style: italic;
+}
+.ck.ck-content u {
+	text-decoration: underline;
+}
+.ck.ck-content a {
+	color: #2563eb;
+	text-decoration: none;
+	font-weight: 500;
+}
+.ck.ck-content a:hover {
+	color: #1e40af;
+}
+.ck.ck-content small {
+	font-size: 85%;
+}
+.ck.ck-content ul,
+.ck.ck-content ol {
+	margin-top: 0;
+	margin-bottom: 10px;
+	padding-left: 40px;
+}
+.ck.ck-content ul ul,
+.ck.ck-content ol ul,
+.ck.ck-content ul ol,
+.ck.ck-content ol ol {
+	margin-bottom: 0;
+}
+.ck.ck-content li {
+	margin-bottom: 0.5em;
+}
+.ck.ck-content img {
+	max-width: 100%;
+	height: auto;
+	border-radius: 8px;
+	margin: 1.5em 0;
+}
+.ck.ck-content table,
+.ck.ck-content .table {
+	width: 100%;
+	max-width: 100%;
+	margin-bottom: 20px;
+	background-color: transparent;
+}
+.ck.ck-content table > thead > tr > th,
+.ck.ck-content table > tbody > tr > th,
+.ck.ck-content table > tfoot > tr > th,
+.ck.ck-content table > thead > tr > td,
+.ck.ck-content table > tbody > tr > td,
+.ck.ck-content table > tfoot > tr > td {
+	padding: 8px !important;
+	line-height: 1.42857143;
+	vertical-align: top;
+	border-top: 1px solid #ddd !important;
+}
+.ck.ck-content table > thead > tr > th {
+	vertical-align: bottom;
+	border-bottom: 2px solid #ddd;
+}
+.ck.ck-content table > tbody + tbody {
+	border-top: 2px solid #ddd;
+}
+.ck.ck-content blockquote {
+	border-left: 5px solid #e5e7eb;
+	padding: 0.8em 1.2em;
+	margin: 1.5em 0;
+	background: #f9fafb;
+	color: #374151;
+	font-style: italic;
+}
+
+.ck.ck-content figure {
+	margin: 1.5em 0;
+}
+.ck.ck-content figcaption {
+	font-size: 0.875rem;
+	color: #6b7280;
+	text-align: center;
+	margin-top: 0.5em;
+}
+.ck.ck-content pre {
+	background: #0f172a;
+	color: #e5e7eb;
+	padding: 1.2em;
+	border-radius: 8px;
+	overflow-x: auto;
+	margin: 1.5em 0;
+	font-size: 0.875rem;
+}
+.ck.ck-content code {
+	background: #f3f4f6;
+	padding: 0.2em 0.4em;
+	border-radius: 4px;
+	font-size: 0.875em;
+}
+.ck.ck-content hr {
+	margin: 1em 0;
+	height: 2px;
+	border: none;
+	border-top: 1px solid #e5e7eb;
+}

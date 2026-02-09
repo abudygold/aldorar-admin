@@ -1,0 +1,25 @@
+<mat-nav-list class="sidebar">
+	@for (item of menu(); track $index) {
+		<!-- Parent item -->
+		<mat-list-item [class.active-item]="isActive(item)" (click)="clickedMenu(item)">
+			<fa-icon [icon]="item.icon" matListItemIcon />
+			<span matListItemTitle>{{ item.label | translate }}</span>
+
+			<!-- Expand/collapse arrow -->
+			@if (item.submenu) {
+				<fa-icon [icon]="isExpanded(item) ? faIcon.faChevronDown : faIcon.faChevronUp" />
+			}
+		</mat-list-item>
+
+		<!-- Submenu -->
+		@if (item.submenu && isExpanded(item)) {
+			<div class="tw:pl-4">
+				<app-admin-sidebar
+					[menu]="item.submenu"
+					[snav]="snav()"
+					[isMobile]="isMobile()"
+					(toggleMenu)="isMobile() ? snav()?.toggle() : null" />
+			</div>
+		}
+	}
+</mat-nav-list>

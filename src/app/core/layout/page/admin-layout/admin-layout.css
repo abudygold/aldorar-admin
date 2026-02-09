@@ -1,0 +1,40 @@
+.page-wrapper {
+  animation-duration: 300ms;
+  animation-fill-mode: both;
+}
+
+.page-wrapper.page-enter {
+  -webkit-animation: moveFromLeftFade 0.5s ease-in-out both;
+  animation: moveFromLeftFade 0.5s ease-in-out both;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes pageFadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@-webkit-keyframes moveFromLeftFade {
+  from {
+    opacity: 0.3;
+    -webkit-transform: translateX(-100%);
+  }
+}
+@keyframes moveFromLeftFade {
+  from {
+    opacity: 0.3;
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+}

@@ -1,0 +1,21 @@
+<mat-toolbar
+	class="header tw:gap-5"
+	[ngClass]="{
+		'tw:fixed': isMobile(),
+		'tw:z-10': isMobile(),
+	}">
+	<button matIconButton (click)="toggleMenu.emit()" class="tw:cursor-pointer">
+		<fa-icon [icon]="faIcon.faBars" />
+	</button>
+
+	<img
+		src="./logo/adam-tour-white.svg"
+		alt="Adam Tour Logo"
+		class="tw:max-h-36 tw:object-cover" />
+
+	<span class="tw:grow"></span>
+
+	<button matIconButton class="tw:cursor-pointer" (click)="onLogout()">
+		<fa-icon [icon]="faIcon.faSignOut" />
+	</button>
+</mat-toolbar>

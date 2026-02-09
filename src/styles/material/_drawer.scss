@@ -1,0 +1,11 @@
+mat-sidenav-container {
+	overflow: auto !important;
+	mat-sidenav {
+		&.mat-drawer {
+			width: 350px;
+			.mat-drawer-inner-container {
+				background: color-mix(in srgb, var(--mat-sys-primary) 20%, transparent);
+			}
+		}
+	}
+}

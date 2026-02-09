@@ -1,0 +1,30 @@
+mat-nav-list {
+	&.sidebar {
+		padding: 0 6px;
+		.mat-mdc-list-item {
+			padding-right: 0;
+			margin: 10px 0;
+			&:hover,
+			&:focus,
+			&.active-item {
+				background-color: var(--mat-sys-primary);
+				color: #ffffff;
+				.mat-mdc-list-item-title,
+				mat-icon,
+				svg {
+					color: #ffffff;
+				}
+			}
+		}
+		.mat-mdc-list-item-title {
+			&::before {
+				height: 36px !important;
+			}
+		}
+		.mat-mdc-list-item-unscoped-content {
+			right: 25px;
+			position: absolute;
+			place-self: center;
+		}
+	}
+}
