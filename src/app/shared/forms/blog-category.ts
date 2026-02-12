@@ -1,4 +1,4 @@
-import { FieldTree } from '@angular/forms/signals';
+import { FieldTree, PathKind, required, SchemaPathTree } from '@angular/forms/signals';
 import { FormlyField, FormlyFormConfig } from '@devkitify/angular-ui-kit';
 
 export interface IBlogCategory {
@@ -7,7 +7,21 @@ export interface IBlogCategory {
 	code: string;
 }
 
-export const BLOG_CATEGORY_FORM = (
+export const DEFAULT_STATE_BLOG_CATEGORY = (data: any) => ({
+	label: data?.label || '',
+	value: data?.value || '',
+	code: data?.code || '',
+});
+
+export const FORM_SCHEMA_BLOG_CATEGORY = (
+	schemaPath: SchemaPathTree<IBlogCategory, PathKind.Root>,
+) => {
+	required(schemaPath.label, { message: 'Label is required' });
+	required(schemaPath.value, { message: 'Value is required' });
+	required(schemaPath.code, { message: 'Code is required' });
+};
+
+export const FORM_BLOG_CATEGORY = (
 	formData: FieldTree<IBlogCategory, string | number>,
 ): FormlyFormConfig => ({
 	formClass: 'tw:grid tw:gap-4',

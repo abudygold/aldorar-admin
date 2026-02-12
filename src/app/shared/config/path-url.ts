@@ -20,7 +20,7 @@ export const PACKAGE_URL = `${environment.api.baseUrl}package`;
 export const PACKAGE_PRICE_URL = `${environment.api.baseUrl}price`;
 
 /* PACKAGE TRANSACTION */
-export const PACKAGE_TRANSACTION_URL = `${environment.api.baseUrl}atransaction`;
+export const PACKAGE_TRANSACTION_URL = `${environment.api.baseUrl}transaction`;
 
 /* PACKAGE PARTICIPANT */
 export const PACKAGE_PARTICIPANT_URL = `${environment.api.baseUrl}participant`;

@@ -1,13 +1,21 @@
 import { Component, inject, signal } from '@angular/core';
-import { form, required, submit } from '@angular/forms/signals';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Dialog, Formly, FormlyFormConfig } from '@devkitify/angular-ui-kit';
-import { BaseAlert, DEFAULT_MESSAGE_CREATE, DEFAULT_MESSAGE_UPDATE } from '../../../../core/common';
-import { API } from '../../../../core/services';
+import {
+	BaseAlert,
+	BaseForm,
+	DEFAULT_MESSAGE_CREATE,
+	DEFAULT_MESSAGE_UPDATE,
+} from '../../../../core/common';
 import { CATEGORIES_URL } from '../../../../shared/config';
-import { BLOG_CATEGORY_FORM, IBlogCategory } from '../../../../shared/forms';
-import { IHttpResponse } from '../../../../shared/interface/base/http-response';
+import {
+	DEFAULT_STATE_BLOG_CATEGORY,
+	FORM_BLOG_CATEGORY,
+	FORM_SCHEMA_BLOG_CATEGORY,
+	IBlogCategory,
+} from '../../../../shared/forms';
+import { IHttpResponse } from '../../../../shared/interface/base';
 
 @Component({
 	selector: 'app-blog-category-form',
@@ -15,33 +23,22 @@ import { IHttpResponse } from '../../../../shared/interface/base/http-response';
 	templateUrl: './blog-category-form.html',
 	styleUrl: './blog-category-form.css',
 })
-export class BlogCategoryForm {
+export class BlogCategoryForm extends BaseForm<IBlogCategory> {
 	protected dialogRef = inject(MatDialogRef<BlogCategoryForm>);
 	protected data = inject(MAT_DIALOG_DATA);
-	#api = inject(API);
 
-	formModel = signal<IBlogCategory>({
-		label: this.data?.label || '',
-		value: this.data?.value || '',
-		code: this.data?.code || '',
-	});
+	formConfig = signal<FormlyFormConfig>(FORM_BLOG_CATEGORY(this.formData));
 
-	formData = form(this.formModel, (schemaPath) => {
-		required(schemaPath.label, { message: 'Label is required' });
-		required(schemaPath.value, { message: 'Value is required' });
-		required(schemaPath.code, { message: 'Code is required' });
-	});
-
-	formConfig: FormlyFormConfig = BLOG_CATEGORY_FORM(this.formData);
-
-	onSubmit(): void {
-		submit(this.formData, async () => this.categoryService());
+	constructor() {
+		super({} as IBlogCategory, (schemaPath) => FORM_SCHEMA_BLOG_CATEGORY(schemaPath));
+		this.formModel.set(DEFAULT_STATE_BLOG_CATEGORY(this.data));
+		this.fnSubmit = this.onSubmitService;
 	}
 
-	categoryService(): void {
+	onSubmitService(): void {
 		const URI = `${CATEGORIES_URL}${this.data ? `/${this.data?.id}` : ''}`;
 
-		this.#api[this.data ? 'put' : 'post']<IHttpResponse>(URI, this.formModel()).subscribe({
+		this.api[this.data ? 'put' : 'post']<IHttpResponse>(URI, this.formModel()).subscribe({
 			next: (res) => {
 				BaseAlert(
 					'Success!',

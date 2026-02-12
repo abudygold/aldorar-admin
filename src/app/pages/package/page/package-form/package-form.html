@@ -1,0 +1,316 @@
+<div class="tw:grid tw:md:grid-cols-2 tw:gap-4">
+	<div class="tw:mb-3">
+		<mat-form-field appearance="outline" class="tw:w-full no-hint">
+			<mat-label>Nama Paket</mat-label>
+			<input matInput placeholder="Nama Paket" [formField]="formData.title" />
+		</mat-form-field>
+
+		@if (formData.title().touched() && formData.title().invalid()) {
+			@for (error of formData.title().errors(); track error.kind) {
+				<mat-error>{{ error.message }}</mat-error>
+			}
+		}
+	</div>
+
+	<div class="tw:mb-3">
+		<mat-form-field appearance="outline" class="tw:w-full no-hint">
+			<mat-label>Tipe Umrah</mat-label>
+			<mat-select [formField]="formData.tripType">
+				<mat-option value="">-- Pilih Tipe Umrah --</mat-option>
+				@for (option of opt.umrahType(); track $index) {
+					<mat-option [value]="option.value">
+						{{ option.label }}
+					</mat-option>
+				}
+			</mat-select>
+		</mat-form-field>
+
+		@if (formData.tripType().touched() && formData.tripType().invalid()) {
+			@for (error of formData.tripType().errors(); track error.kind) {
+				<mat-error>{{ error.message }}</mat-error>
+			}
+		}
+	</div>
+
+	<div class="tw:mb-3">
+		<mat-form-field appearance="outline" class="tw:w-full no-hint">
+			<mat-label>Durasi</mat-label>
+			<input
+				matInput
+				type="number"
+				placeholder="Durasi"
+				[formField]="formData.durationDays" />
+		</mat-form-field>
+
+		@if (formData.durationDays().touched() && formData.durationDays().invalid()) {
+			@for (error of formData.durationDays().errors(); track error.kind) {
+				<mat-error>{{ error.message }}</mat-error>
+			}
+		}
+	</div>
+
+	<div class="tw:mb-3">
+		<mat-form-field appearance="outline" class="tw:w-full no-hint">
+			<mat-label>Kuota</mat-label>
+			<input matInput type="number" placeholder="Kuota" [formField]="formData.quota" />
+		</mat-form-field>
+
+		@if (formData.quota().touched() && formData.quota().invalid()) {
+			@for (error of formData.quota().errors(); track error.kind) {
+				<mat-error>{{ error.message }}</mat-error>
+			}
+		}
+	</div>
+
+	<div class="tw:col-span-2 tw:mb-3">
+		<p class="tw:font-semibold tw:text-lg tw:mb-3">Keberangkatan</p>
+		<div class="tw:grid tw:grid-cols-2 tw:gap-4">
+			<div class="tw:w-full">
+				<mat-form-field appearance="outline" class="tw:w-full no-hint">
+					<mat-label>Tanggal</mat-label>
+					<input
+						matInput
+						[matDatepicker]="departureDate"
+						[formField]="formData.departureDate" />
+					<mat-datepicker-toggle
+						matIconSuffix
+						[for]="departureDate"></mat-datepicker-toggle>
+					<mat-datepicker #departureDate></mat-datepicker>
+				</mat-form-field>
+
+				@if (formData.departureDate().touched() && formData.departureDate().invalid()) {
+					@for (error of formData.departureDate().errors(); track error.kind) {
+						<mat-error>{{ error.message }}</mat-error>
+					}
+				}
+			</div>
+			<div class="tw:w-full">
+				<mat-form-field appearance="outline" class="tw:w-full no-hint">
+					<mat-label>Maskapai</mat-label>
+					<input
+						matInput
+						placeholder="Maskapai"
+						[formField]="formData.departureAirline" />
+				</mat-form-field>
+
+				@if (
+					formData.departureAirline().touched() && formData.departureAirline().invalid()
+				) {
+					@for (error of formData.departureAirline().errors(); track error.kind) {
+						<mat-error>{{ error.message }}</mat-error>
+					}
+				}
+			</div>
+			<div class="tw:w-full">
+				<mat-form-field appearance="outline" class="tw:w-full no-hint">
+					<mat-label>Jenis Penerbangan</mat-label>
+					<mat-select [formField]="formData.departureFlightType">
+						<mat-option value="">-- Pilih Jenis Penerbangan --</mat-option>
+						@for (option of opt.flightType(); track $index) {
+							<mat-option [value]="option.value">
+								{{ option.label }}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+
+				@if (
+					formData.departureFlightType().touched() &&
+					formData.departureFlightType().invalid()
+				) {
+					@for (error of formData.departureFlightType().errors(); track error.kind) {
+						<mat-error>{{ error.message }}</mat-error>
+					}
+				}
+			</div>
+			<div class="tw:w-full">
+				<mat-form-field appearance="outline" class="tw:w-full no-hint">
+					<mat-label>Landing</mat-label>
+					<input matInput placeholder="Landing" [formField]="formData.departureLanding" />
+				</mat-form-field>
+
+				@if (
+					formData.departureLanding().touched() && formData.departureLanding().invalid()
+				) {
+					@for (error of formData.departureLanding().errors(); track error.kind) {
+						<mat-error>{{ error.message }}</mat-error>
+					}
+				}
+			</div>
+		</div>
+	</div>
+
+	<div class="tw:col-span-2 tw:mb-3">
+		<p class="tw:font-semibold tw:text-lg tw:mb-3">Kepulangan</p>
+		<div class="tw:grid tw:grid-cols-2 tw:gap-4">
+			<div class="tw:w-full">
+				<mat-form-field appearance="outline" class="tw:w-full no-hint">
+					<mat-label>Tanggal</mat-label>
+					<input
+						matInput
+						[matDatepicker]="returnDate"
+						[min]="formData.departureDate().value()"
+						[formField]="formData.returnDate" />
+					<mat-datepicker-toggle matIconSuffix [for]="returnDate"></mat-datepicker-toggle>
+					<mat-datepicker #returnDate></mat-datepicker>
+				</mat-form-field>
+
+				@if (formData.returnDate().touched() && formData.returnDate().invalid()) {
+					@for (error of formData.returnDate().errors(); track error.kind) {
+						<mat-error>{{ error.message }}</mat-error>
+					}
+				}
+			</div>
+			<div class="tw:w-full">
+				<mat-form-field appearance="outline" class="tw:w-full no-hint">
+					<mat-label>Maskapai</mat-label>
+					<input matInput placeholder="Maskapai" [formField]="formData.returnAirline" />
+				</mat-form-field>
+
+				@if (formData.returnAirline().touched() && formData.returnAirline().invalid()) {
+					@for (error of formData.returnAirline().errors(); track error.kind) {
+						<mat-error>{{ error.message }}</mat-error>
+					}
+				}
+			</div>
+			<div class="tw:w-full">
+				<mat-form-field appearance="outline" class="tw:w-full no-hint">
+					<mat-label>Jenis Penerbangan</mat-label>
+					<mat-select [formField]="formData.returnFlightType">
+						<mat-option value="">-- Pilih Jenis Penerbangan --</mat-option>
+						@for (option of opt.flightType(); track $index) {
+							<mat-option [value]="option.value">
+								{{ option.label }}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+
+				@if (
+					formData.returnFlightType().touched() && formData.returnFlightType().invalid()
+				) {
+					@for (error of formData.returnFlightType().errors(); track error.kind) {
+						<mat-error>{{ error.message }}</mat-error>
+					}
+				}
+			</div>
+			<div class="tw:w-full">
+				<mat-form-field appearance="outline" class="tw:w-full no-hint">
+					<mat-label>Landing</mat-label>
+					<input matInput placeholder="Landing" [formField]="formData.returnLanding" />
+				</mat-form-field>
+
+				@if (formData.returnLanding().touched() && formData.returnLanding().invalid()) {
+					@for (error of formData.returnLanding().errors(); track error.kind) {
+						<mat-error>{{ error.message }}</mat-error>
+					}
+				}
+			</div>
+		</div>
+	</div>
+
+	<div class="tw:col-span-2 tw:mb-3">
+		<p class="tw:font-semibold tw:text-lg tw:mb-3">Hotel Makkah</p>
+		<div class="tw:grid tw:grid-cols-2 tw:gap-4">
+			<div class="tw:w-full">
+				<mat-form-field appearance="outline" class="tw:w-full no-hint">
+					<mat-label>Nama Hotel</mat-label>
+					<input
+						matInput
+						placeholder="Nama Hotel"
+						[formField]="formData.mekkahHotelName" />
+				</mat-form-field>
+
+				@if (formData.mekkahHotelName().touched() && formData.mekkahHotelName().invalid()) {
+					@for (error of formData.mekkahHotelName().errors(); track error.kind) {
+						<mat-error>{{ error.message }}</mat-error>
+					}
+				}
+			</div>
+			<div class="tw:w-full">
+				<mat-form-field appearance="outline" class="tw:w-full no-hint">
+					<mat-label>Bintang Hotel</mat-label>
+					<input
+						matInput
+						type="number"
+						placeholder="Bintang Hotel"
+						[formField]="formData.mekkahHotelStar" />
+				</mat-form-field>
+
+				@if (formData.mekkahHotelStar().touched() && formData.mekkahHotelStar().invalid()) {
+					@for (error of formData.mekkahHotelStar().errors(); track error.kind) {
+						<mat-error>{{ error.message }}</mat-error>
+					}
+				}
+			</div>
+		</div>
+	</div>
+
+	<div class="tw:col-span-2 tw:mb-3">
+		<p class="tw:font-semibold tw:text-lg tw:mb-3">Hotel Madinah</p>
+		<div class="tw:grid tw:grid-cols-2 tw:gap-4">
+			<div class="tw:w-full">
+				<mat-form-field appearance="outline" class="tw:w-full no-hint">
+					<mat-label>Nama Hotel</mat-label>
+					<input
+						matInput
+						placeholder="Nama Hotel"
+						[formField]="formData.madinahHotelName" />
+				</mat-form-field>
+
+				@if (
+					formData.madinahHotelName().touched() && formData.madinahHotelName().invalid()
+				) {
+					@for (error of formData.madinahHotelName().errors(); track error.kind) {
+						<mat-error>{{ error.message }}</mat-error>
+					}
+				}
+			</div>
+			<div class="tw:w-full">
+				<mat-form-field appearance="outline" class="tw:w-full no-hint">
+					<mat-label>Bintang Hotel</mat-label>
+					<input
+						matInput
+						type="number"
+						placeholder="Bintang Hotel"
+						[formField]="formData.madinahHotelStar" />
+				</mat-form-field>
+
+				@if (
+					formData.madinahHotelStar().touched() && formData.madinahHotelStar().invalid()
+				) {
+					@for (error of formData.madinahHotelStar().errors(); track error.kind) {
+						<mat-error>{{ error.message }}</mat-error>
+					}
+				}
+			</div>
+		</div>
+	</div>
+
+	<div class="tw:md:col-span-2 tw:flex tw:gap-4">
+		<mat-slide-toggle [formField]="formData.isPlusThaif"> Plus Thaif </mat-slide-toggle>
+
+		<mat-slide-toggle [formField]="formData.isHighSpeedTrain"> Kereta Cepat </mat-slide-toggle>
+
+		<mat-slide-toggle [formField]="formData.isPublish"> Publikasikan </mat-slide-toggle>
+	</div>
+
+	<hr class="tw:md:col-span-2 tw:text-gray-300 tw:my-3 tw:shadow" />
+
+	<div class="tw:md:col-span-2 tw:flex tw:justify-between tw:gap-6 tw:my-4">
+		<button
+			matButton
+			class="tw:md:min-w-48!"
+			[disabled]="formData().submitting()"
+			(click)="goBackToList()">
+			Kembali
+		</button>
+		<button
+			matButton="filled"
+			class="tw:md:min-w-48!"
+			[disabled]="formData().submitting()"
+			(click)="onSubmit()">
+			Submit
+		</button>
+	</div>
+</div>

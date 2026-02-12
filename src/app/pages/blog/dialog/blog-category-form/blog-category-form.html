@@ -1,7 +1,7 @@
 <lib-dialog [title]="data ? 'Edit Category' : 'Add Category'">
 	<ng-container content>
 		<div class="tw:pt-5">
-			<lib-formly [formConfig]="formConfig" />
+			<lib-formly [formConfig]="formConfig()" />
 		</div>
 	</ng-container>
 	<ng-container actions>

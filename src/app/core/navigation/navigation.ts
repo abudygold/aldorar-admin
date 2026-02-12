@@ -23,57 +23,57 @@ export interface NavItem {
 
 export const NAVIGATION_MENU: NavItem[] = [
 	{
-		label: 'menus.dashboard',
+		label: 'pages.dashboard.label',
 		icon: faDashboard,
 		path: '/',
 	},
 	{
-		label: 'menus.myAccount',
+		label: 'pages.myAccount.label',
 		icon: faAddressCard,
 		path: '/',
 	},
 	{
-		label: 'menus.administrativeManagement.label',
+		label: 'pages.administrative.label',
 		icon: faFolderTree,
 		submenu: [
 			{
-				label: 'menus.administrativeManagement.package',
+				label: 'pages.administrative.package.label',
 				icon: faSuitcase,
 				path: 'secure/package',
 			},
 			{
-				label: 'menus.administrativeManagement.price',
+				label: 'pages.administrative.price.label',
 				icon: faTags,
 				path: 'secure/package/price',
 			},
 			{
-				label: 'menus.administrativeManagement.participant',
+				label: 'pages.administrative.participant.label',
 				icon: faPeopleGroup,
 				path: 'secure/package/participant',
 			},
 			{
-				label: 'menus.administrativeManagement.transaction',
+				label: 'pages.administrative.transaction.label',
 				icon: faBook,
 				path: 'secure/package/transaction',
 			},
 			{
-				label: 'menus.administrativeManagement.payment',
+				label: 'pages.administrative.payment.label',
 				icon: faMoneyBillTransfer,
 				path: 'secure/package/payment',
 			},
 		],
 	},
 	{
-		label: 'menus.contentManagement.label',
+		label: 'pages.content.label',
 		icon: faFolderTree,
 		submenu: [
 			{
-				label: 'menus.contentManagement.blog',
+				label: 'pages.content.blog.label',
 				icon: faNewspaper,
 				path: 'secure/blog',
 			},
 			{
-				label: 'menus.contentManagement.blogCategories',
+				label: 'pages.content.category.label',
 				icon: faLayerGroup,
 				path: 'secure/blog/categories',
 			},

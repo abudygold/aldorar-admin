@@ -1,20 +1,40 @@
-import { inject } from '@angular/core';
+import { inject, signal } from '@angular/core';
 import { Sort } from '@angular/material/sort';
-import { TableModel } from '@devkitify/angular-ui-kit';
-import { IHttpResponse } from '../../shared/interface/base/http-response';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ButtonModel, TableModel } from '@devkitify/angular-ui-kit';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { IHttpResponse } from '../../shared/interface/base';
 import { API } from '../services';
+import { BaseAlert, DEFAULT_MESSAGE_DELETE } from './base-sweetalert';
 
 export class BaseTable {
 	api = inject(API);
+	router = inject(Router);
+	activatedRoute = inject(ActivatedRoute);
+
+	button = {
+		addNew: signal<ButtonModel>(new ButtonModel()),
+	};
+
+	faIcon = {
+		faEdit,
+		faTrash,
+	};
 
 	endpoint!: string;
 	tableModel!: TableModel;
 	customType!: object | null;
 
-	constructor(tableModel: TableModel, endpoint: string, customType?: object) {
+	constructor(
+		endpoint: string,
+		tableModel: TableModel,
+		customType: object = {},
+		addButton: ButtonModel = new ButtonModel(),
+	) {
 		this.endpoint = endpoint;
 		this.tableModel = tableModel;
-		this.customType = customType || null;
+		this.customType = customType;
+		this.button.addNew.set(addButton);
 
 		this.fetchData();
 	}
@@ -26,7 +46,6 @@ export class BaseTable {
 			next: (res) => {
 				this.tableModel.dataSource = res?.data?.rows || [];
 				this.tableModel.dataTotal = res?.data?.pagination?.total || 0;
-				this.tableModel.isLoading.set(false);
 				this.tableModel.generateDataType();
 			},
 			complete: () => {
@@ -35,8 +54,19 @@ export class BaseTable {
 						...this.tableModel.dataType,
 						...this.customType,
 					};
+
+				this.tableModel.isLoading.set(false);
 			},
 			error: () => this.tableModel.isLoading.set(false),
+		});
+	}
+
+	deleteService(id: string): void {
+		this.api.delete<IHttpResponse>(`${this.endpoint}/${id}`).subscribe({
+			next: (res) => {
+				BaseAlert('Deleted!', res?.msg || DEFAULT_MESSAGE_DELETE, 'success');
+				this.fetchData();
+			},
 		});
 	}
 

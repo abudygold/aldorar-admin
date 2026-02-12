@@ -15,10 +15,6 @@
 	<div class="tw:mb-3">
 		<mat-form-field appearance="outline" class="tw:w-full no-hint">
 			<mat-label>Kategori</mat-label>
-			<!-- msInfiniteScroll
-			[complete]="allLoaded()"
-			(infiniteScroll)="loadNextPage()"
-			class="tw:max-h-5!" -->
 			<mat-select [formField]="formData.categoryId">
 				<mat-option value="">-- Pilih Kategori --</mat-option>
 				@for (option of opt.category(); track $index) {
@@ -36,7 +32,7 @@
 		}
 	</div>
 
-	<div class="tw:mb-3">
+	<div class="tw:flex tw:gap-4 tw:mb-3">
 		<mat-form-field appearance="outline" class="tw:w-full no-hint">
 			<mat-label>Thumbnail</mat-label>
 
@@ -54,6 +50,10 @@
 
 			<input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" />
 		</mat-form-field>
+
+		@if (formModel().thumbnailUrl) {
+			<img [src]="formModel().thumbnailUrl" class="tw:max-h-14" alt="Cover Image" />
+		}
 	</div>
 
 	<div class="tw:mb-3">
@@ -72,10 +72,6 @@
 	<div class="tw:mb-3">
 		<textarea id="editor"></textarea>
 
-		<!-- <article
-			class="ck ck-content"
-			[innerHTML]="formData.content().value() | sanitizeHtml"></article> -->
-
 		@if (formData.content().touched() && formData.content().invalid()) {
 			@for (error of formData.content().errors(); track error.kind) {
 				<mat-error>{{ error.message }}</mat-error>
@@ -88,7 +84,19 @@
 	<hr class="tw:text-gray-300 tw:my-3 tw:shadow" />
 
 	<div class="tw:flex tw:justify-between tw:gap-6 tw:my-4">
-		<button matButton class="tw:min-w-48!" (click)="goBackToList()">Kembali</button>
-		<button matButton="filled" class="tw:min-w-48!" (click)="onSubmit()">Submit</button>
+		<button
+			matButton
+			class="tw:md:min-w-48!"
+			[disabled]="formData().submitting()"
+			(click)="goBackToList()">
+			Kembali
+		</button>
+		<button
+			matButton="filled"
+			class="tw:md:min-w-48!"
+			[disabled]="formData().submitting()"
+			(click)="onSubmit()">
+			Submit
+		</button>
 	</div>
 </div>
