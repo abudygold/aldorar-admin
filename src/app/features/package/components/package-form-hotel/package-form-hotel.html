@@ -1,0 +1,124 @@
+<lib-button [config]="addNewButton()" class="tw:flex tw:justify-end tw:mb-3" />
+
+<mat-accordion>
+	@for (hotel of form().hotels; track $index) {
+		<mat-expansion-panel
+			class="tw:shadow-md!"
+			[expanded]="step() === $index"
+			(opened)="setStep($index)"
+			hideToggle>
+			<mat-expansion-panel-header>
+				<mat-panel-title class="tw:capitalize">
+					Hotel {{ hotel.city().value() || $index + 1 }}
+				</mat-panel-title>
+				<mat-panel-description style="flex-grow: initial">
+					<fa-icon
+						[icon]="faIcon.faTrash"
+						class="tw:text-red-400"
+						(click)="dropHotel($event, $index)" />
+				</mat-panel-description>
+			</mat-expansion-panel-header>
+
+			<div class="tw:grid tw:md:grid-cols-12 tw:gap-4 tw:py-3">
+				<div class="tw:md:col-span-6">
+					<lib-textbox
+						class="no-hint"
+						[field]="{
+							key: 'city',
+							type: 'textbox',
+							control: $any(hotel.city),
+							config: {
+								label: 'City',
+							},
+						}" />
+
+					<app-message-validation [fieldState]="hotel.city()" />
+				</div>
+
+				<div class="tw:md:col-span-6">
+					<lib-textbox
+						class="no-hint"
+						[field]="{
+							key: 'country',
+							type: 'textbox',
+							control: $any(hotel.country),
+							config: {
+								label: 'Country',
+							},
+						}" />
+
+					<app-message-validation [fieldState]="hotel.country()" />
+				</div>
+
+				<div class="tw:md:col-span-6">
+					<lib-textbox
+						class="no-hint"
+						[field]="{
+							key: 'hotelName',
+							type: 'textbox',
+							control: $any(hotel.hotelName),
+							config: {
+								label: 'Hotel Name',
+							},
+						}" />
+
+					<app-message-validation [fieldState]="hotel.hotelName()" />
+				</div>
+
+				<div class="tw:md:col-span-6">
+					<lib-dropdown
+						class="no-hint"
+						[field]="{
+							key: 'star',
+							type: 'dropdown',
+							control: $any(hotel.star),
+							config: {
+								label: 'Star',
+								options: {
+									data: [1, 2, 3, 4, 5],
+								},
+							},
+						}" />
+
+					<app-message-validation [fieldState]="hotel.star()" />
+				</div>
+
+				<div class="tw:md:col-span-6">
+					<lib-datepicker
+						class="no-hint"
+						[field]="{
+							key: 'checkInDate',
+							type: 'datepicker',
+							control: $any(hotel.checkInDate),
+							config: {
+								label: 'Check in Date',
+								datepicker: {
+									minDate: today(),
+								},
+							},
+						}" />
+
+					<app-message-validation [fieldState]="hotel.checkInDate()" />
+				</div>
+
+				<div class="tw:md:col-span-6">
+					<lib-datepicker
+						class="no-hint"
+						[field]="{
+							key: 'checkOutDate',
+							type: 'datepicker',
+							control: $any(hotel.checkOutDate),
+							config: {
+								label: 'Check out Date',
+								datepicker: {
+									minDate: today(),
+								},
+							},
+						}" />
+
+					<app-message-validation [fieldState]="hotel.checkOutDate()" />
+				</div>
+			</div>
+		</mat-expansion-panel>
+	}
+</mat-accordion>

@@ -2,13 +2,11 @@ import {
 	faAddressCard,
 	faBook,
 	faDashboard,
-	faFolderTree,
+	faFile,
 	faLayerGroup,
 	faMoneyBillTransfer,
 	faNewspaper,
-	faPeopleGroup,
 	faSuitcase,
-	faTags,
 } from '@fortawesome/free-solid-svg-icons';
 
 export interface NavItem {
@@ -30,69 +28,41 @@ export const NAVIGATION_MENU: NavItem[] = [
 	{
 		label: 'pages.myAccount.label',
 		icon: faAddressCard,
-		path: '/',
+		path: 'secure/profile',
 	},
 	{
-		label: 'pages.administrative.label',
-		icon: faFolderTree,
-		submenu: [
-			{
-				label: 'pages.administrative.package.label',
-				icon: faSuitcase,
-				path: 'secure/package',
-			},
-			{
-				label: 'pages.administrative.price.label',
-				icon: faTags,
-				path: 'secure/package/price',
-			},
-			{
-				label: 'pages.administrative.participant.label',
-				icon: faPeopleGroup,
-				path: 'secure/package/participant',
-			},
-			{
-				label: 'pages.administrative.transaction.label',
-				icon: faBook,
-				path: 'secure/package/transaction',
-			},
-			{
-				label: 'pages.administrative.payment.label',
-				icon: faMoneyBillTransfer,
-				path: 'secure/package/payment',
-			},
-		],
+		label: 'pages.package.label',
+		icon: faSuitcase,
+		path: 'secure/package',
 	},
 	{
-		label: 'pages.content.label',
-		icon: faFolderTree,
-		submenu: [
-			{
-				label: 'pages.content.blog.label',
-				icon: faNewspaper,
-				path: 'secure/blog',
-			},
-			{
-				label: 'pages.content.category.label',
-				icon: faLayerGroup,
-				path: 'secure/blog/categories',
-			},
-		],
+		label: 'pages.travelers.label',
+		icon: faAddressCard,
+		path: 'secure/traveler',
 	},
-	/* {
-		label: 'Pengaturan Web',
-		icon: 'circleInfo',
-		submenu: [
-			{
-				label: 'Blog',
-				icon: 'chevronRight',
-				path: '/package/umrah-package',
-			},
-			{
-				label: 'Kategori',
-				icon: 'chevronRight',
-				path: '/package/umrah-private',
-			},
-		],
-	}, */
+	{
+		label: 'pages.transaction.label',
+		icon: faBook,
+		path: 'secure/transaction',
+	},
+	{
+		label: 'pages.payment.label',
+		icon: faMoneyBillTransfer,
+		path: 'secure/payment',
+	},
+	{
+		label: 'pages.document.label',
+		icon: faFile,
+		path: 'secure/document',
+	},
+	{
+		label: 'pages.blog.label',
+		icon: faNewspaper,
+		path: 'secure/blog',
+	},
+	{
+		label: 'pages.category.label',
+		icon: faLayerGroup,
+		path: 'secure/categories',
+	},
 ];

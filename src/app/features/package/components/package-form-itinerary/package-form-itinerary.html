@@ -1,0 +1,84 @@
+<lib-button [config]="addNewButton()" class="tw:flex tw:justify-end tw:mb-3" />
+
+<mat-accordion>
+	@for (itinerary of form().itineraries; track $index) {
+		<mat-expansion-panel
+			class="tw:shadow-md!"
+			[expanded]="step() === $index"
+			(opened)="setStep($index)"
+			hideToggle>
+			<mat-expansion-panel-header>
+				<mat-panel-title class="tw:capitalize">
+					Itinerary {{ itinerary.title().value() || $index + 1 }}
+				</mat-panel-title>
+				<mat-panel-description style="flex-grow: initial">
+					<fa-icon
+						[icon]="faIcon.faTrash"
+						class="tw:text-red-400"
+						(click)="dropItinerary($event, $index)" />
+				</mat-panel-description>
+			</mat-expansion-panel-header>
+
+			<div class="tw:grid tw:md:grid-cols-12 tw:gap-4 tw:py-3">
+				<div class="tw:md:col-span-12">
+					<lib-textbox
+						class="no-hint"
+						[field]="{
+							key: 'title',
+							type: 'textbox',
+							control: $any(itinerary.title),
+							config: {
+								label: 'Title',
+							},
+						}" />
+
+					<app-message-validation [fieldState]="itinerary.title()" />
+				</div>
+
+				<div class="tw:md:col-span-12">
+					<lib-textarea
+						class="no-hint"
+						[field]="{
+							key: 'description',
+							type: 'textarea',
+							control: $any(itinerary.description),
+							config: {
+								label: 'Description',
+							},
+						}" />
+
+					<app-message-validation [fieldState]="itinerary.description()" />
+				</div>
+
+				<div class="tw:md:col-span-6">
+					<lib-textbox
+						class="no-hint"
+						[field]="{
+							key: 'city',
+							type: 'textbox',
+							control: $any(itinerary.city),
+							config: {
+								label: 'City',
+							},
+						}" />
+				</div>
+
+				<div class="tw:md:col-span-6">
+					<lib-datepicker
+						class="no-hint"
+						[field]="{
+							key: 'activityDate',
+							type: 'datepicker',
+							control: $any(itinerary.activityDate),
+							config: {
+								label: 'Activity Date',
+								datepicker: {
+									minDate: today(),
+								},
+							},
+						}" />
+				</div>
+			</div>
+		</mat-expansion-panel>
+	}
+</mat-accordion>

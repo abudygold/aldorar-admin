@@ -1,0 +1,201 @@
+@defer (when !isPageLoaded()) {
+	<div class="tw:grid tw:md:grid-cols-12 tw:gap-4 tw:my-4">
+		<div class="tw:md:col-span-12">
+			<lib-autocomplete
+				class="no-hint"
+				(input)="onInputPackageHandle($event)"
+				[field]="{
+					key: 'tripPackageId',
+					type: 'autocomplete',
+					control: $any(formData.tripPackageId),
+					config: {
+						label: 'Trip Package',
+						options: {
+							data: opt.packages() || [],
+							labelKey: 'title',
+							valueKey: 'id',
+						},
+					},
+				}" />
+
+			<app-message-validation [fieldState]="formData.tripPackageId()" />
+		</div>
+
+		@if (priceSelected()) {
+			<div class="tw:md:col-span-12">
+				<div class="tw:flex tw:justify-around">
+					<span class="tw:font-semibold tw:text-lg">
+						<label class="tw:block tw:text-center">DP</label>
+						<span class="tw:text-green-700">
+							{{ priceSelected()?.dpAmount | currencyIntl: 'IDR' : 'id-ID' }}
+						</span>
+					</span>
+					<span class="tw:font-semibold tw:text-lg">
+						<label class="tw:block tw:text-center">Adult Price</label>
+						<span class="tw:text-green-700">
+							{{ priceSelected()?.price | currencyIntl: 'IDR' : 'id-ID' }}
+						</span>
+					</span>
+					<span class="tw:font-semibold tw:text-lg">
+						<label class="tw:block tw:text-center">Infant Price</label>
+						<span class="tw:text-green-700">
+							{{ priceSelected()?.childPrice | currencyIntl: 'IDR' : 'id-ID' }}
+						</span>
+					</span>
+					<span class="tw:font-semibold tw:text-lg">
+						<label class="tw:block tw:text-center">Infant Price</label>
+						<span class="tw:text-green-700">
+							{{ priceSelected()?.infantPrice | currencyIntl: 'IDR' : 'id-ID' }}
+						</span>
+					</span>
+				</div>
+			</div>
+		}
+
+		<div class="tw:md:col-span-6">
+			<lib-dropdown
+				class="no-hint"
+				[field]="{
+					key: 'pricePerPerson',
+					type: 'dropdown',
+					control: $any(formData.pricePerPerson),
+					onChange: onPriceChangeHandle.bind(this),
+					config: {
+						label: 'Package Price',
+						options: {
+							data: priceOptions() || [],
+							labelKey: 'roomType',
+						},
+					},
+				}" />
+
+			<app-message-validation [fieldState]="formData.pricePerPerson()" />
+		</div>
+
+		<div class="tw:md:col-span-6">
+			<lib-textbox-currency
+				class="no-hint"
+				[field]="{
+					key: 'groupDiscount',
+					type: 'textbox',
+					control: $any(formData.groupDiscount),
+					config: {
+						label: 'Group Discount',
+						texboxCurrency: {
+							currency: 'IDR',
+							locale: 'id-ID',
+						},
+					},
+				}" />
+		</div>
+
+		<div class="tw:md:col-span-6">
+			<lib-textbox-currency
+				class="no-hint"
+				[field]="{
+					key: 'additionalFee',
+					type: 'textbox',
+					control: $any(formData.additionalFee),
+					config: {
+						label: 'Additional Fee',
+						texboxCurrency: {
+							currency: 'IDR',
+							locale: 'id-ID',
+						},
+					},
+				}" />
+		</div>
+
+		<div class="tw:md:col-span-6">
+			<lib-textbox-currency
+				class="no-hint"
+				[field]="{
+					key: 'marketingFee',
+					type: 'textbox',
+					control: $any(formData.marketingFee),
+					config: {
+						label: 'Marketing Fee',
+						texboxCurrency: {
+							currency: 'IDR',
+							locale: 'id-ID',
+						},
+					},
+				}" />
+		</div>
+
+		<div class="tw:md:col-span-12">
+			<lib-textarea
+				class="no-hint"
+				[field]="{
+					key: 'note',
+					type: 'textarea',
+					control: $any(formData.note),
+					config: {
+						label: 'Note',
+					},
+				}" />
+
+			<app-message-validation [fieldState]="formData.note()" />
+		</div>
+	</div>
+
+	@if (formModel().tripPackageId) {
+		<lib-button [config]="btn.add()" class="tw:flex tw:justify-end tw:mb-3" />
+	}
+
+	<mat-accordion>
+		@for (traveler of formData.travelers; track $index) {
+			<mat-expansion-panel
+				class="tw:shadow-md!"
+				[expanded]="step() === $index"
+				(opened)="setStep($index)"
+				hideToggle>
+				<mat-expansion-panel-header>
+					<mat-panel-title class="tw:capitalize">
+						Traveler {{ $index + 1 }}
+					</mat-panel-title>
+					<mat-panel-description style="flex-grow: initial">
+						<fa-icon
+							[icon]="faIcon.faTrash"
+							class="tw:text-red-400"
+							(click)="dropTraveler($event, $index)" />
+					</mat-panel-description>
+				</mat-expansion-panel-header>
+
+				<div class="tw:grid tw:gap-4 tw:py-3">
+					<div>
+						<lib-autocomplete
+							class="no-hint"
+							(input)="onInputTravelerHandle($event)"
+							[field]="{
+								key: 'travelerId',
+								type: 'autocomplete',
+								control: $any(traveler.travelerId),
+								config: {
+									label: 'Traveler',
+									options: {
+										data: opt.travelers() || [],
+										labelKey: 'fullName',
+										valueKey: 'id',
+									},
+								},
+							}" />
+
+						<app-message-validation [fieldState]="traveler.travelerId()" />
+					</div>
+				</div>
+			</mat-expansion-panel>
+		}
+	</mat-accordion>
+
+	<mat-divider />
+
+	<div class="tw:flex tw:justify-between tw:my-4">
+		<lib-button [config]="btn.cancel()" />
+		<lib-button [config]="btn.save()" />
+	</div>
+} @placeholder {
+	<div class="tw:flex tw:justify-center">
+		<mat-progress-spinner mode="indeterminate" [value]="50" />
+	</div>
+}

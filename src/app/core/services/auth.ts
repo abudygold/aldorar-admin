@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IAuthLogin } from '../../shared/interface';
+import { ILoginResp } from '../../shared/interface/response';
 
 @Injectable({
 	providedIn: 'root',
@@ -19,7 +19,7 @@ export class Auth {
 		return !!this.accessToken;
 	}
 
-	setTokens(auth: IAuthLogin) {
+	setTokens(auth: ILoginResp) {
 		if (!auth) return;
 
 		localStorage.setItem('aldorar.access_token', auth.accessToken);

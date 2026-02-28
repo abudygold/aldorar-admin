@@ -1,0 +1,67 @@
+<lib-button [config]="addNewButton()" class="tw:flex tw:justify-end tw:mb-3" />
+
+<mat-accordion>
+	@for (bonus of form().bonuses; track $index) {
+		<mat-expansion-panel
+			class="tw:shadow-md!"
+			[expanded]="step() === $index"
+			(opened)="setStep($index)"
+			hideToggle>
+			<mat-expansion-panel-header>
+				<mat-panel-title class="tw:capitalize">
+					Bonus {{ bonus.bonusName().value() || $index + 1 }}
+				</mat-panel-title>
+				<mat-panel-description style="flex-grow: initial">
+					<fa-icon
+						[icon]="faIcon.faTrash"
+						class="tw:text-red-400"
+						(click)="dropBonus($event, $index)" />
+				</mat-panel-description>
+			</mat-expansion-panel-header>
+
+			<div class="tw:grid tw:gap-4 tw:py-3">
+				<div>
+					<lib-textbox
+						class="no-hint"
+						[field]="{
+							key: 'bonusName',
+							type: 'textbox',
+							control: $any(bonus.bonusName),
+							config: {
+								label: 'Bonus Name',
+							},
+						}" />
+
+					<app-message-validation [fieldState]="bonus.bonusName()" />
+				</div>
+
+				<div>
+					<lib-textarea
+						class="no-hint"
+						[field]="{
+							key: 'description',
+							type: 'textarea',
+							control: $any(bonus.description),
+							config: {
+								label: 'Description',
+							},
+						}" />
+
+					<app-message-validation [fieldState]="bonus.description()" />
+				</div>
+
+				<div>
+					<lib-slide-toggle
+						[field]="{
+							key: 'isOptional',
+							type: 'slide-toggle',
+							control: $any(bonus.isOptional),
+							config: {
+								label: 'Optional',
+							},
+						}" />
+				</div>
+			</div>
+		</mat-expansion-panel>
+	}
+</mat-accordion>

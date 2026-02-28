@@ -1,0 +1,166 @@
+<lib-dialog [title]="data ? 'Edit Payment' : 'Add Payment'">
+	<ng-container content>
+		<div class="tw:grid tw:md:grid-cols-12 tw:gap-4 tw:pb-4 tw:pt-5">
+			@if (id()) {
+				<label class="tw:md:col-span-12 tw:font-semibold"> Invoice Number: </label>
+				<h4 class="tw:md:col-span-12 tw:font-semibold tw:mb-5 tw:text-primary_c">
+					{{ formData.paymentNumber().value() }}
+				</h4>
+			} @else {
+				<div class="tw:md:col-span-12">
+					<lib-autocomplete
+						class="no-hint"
+						(input)="onInputTransactionHandle($event)"
+						[field]="{
+							key: 'tripTransactionId',
+							type: 'autocomplete',
+							control: $any(formData.tripTransactionId),
+							config: {
+								label: 'Trip Transaction ID',
+								options: {
+									data: opt.transaction() || [],
+									labelKey: 'invoiceNumber',
+									valueKey: 'id',
+								},
+							},
+						}" />
+
+					<app-message-validation [fieldState]="formData.tripTransactionId()" />
+				</div>
+			}
+
+			<div class="tw:md:col-span-6">
+				<lib-textbox
+					class="no-hint"
+					[field]="{
+						key: 'paymentMethod',
+						type: 'textbox',
+						control: $any(formData.paymentMethod),
+						config: {
+							label: 'Payment Method',
+						},
+					}" />
+
+				<app-message-validation [fieldState]="formData.paymentMethod()" />
+			</div>
+
+			<div class="tw:md:col-span-6">
+				<lib-textbox
+					class="no-hint"
+					[field]="{
+						key: 'paymentChannel',
+						type: 'textbox',
+						control: $any(formData.paymentChannel),
+						config: {
+							label: 'Payment Channel',
+						},
+					}" />
+
+				<app-message-validation [fieldState]="formData.paymentChannel()" />
+			</div>
+
+			<div class="tw:md:col-span-6">
+				<lib-textbox-currency
+					class="no-hint"
+					[field]="{
+						key: 'amount',
+						type: 'textbox',
+						control: $any(formData.amount),
+						config: {
+							label: 'Amount',
+							texboxCurrency: {
+								currency: 'IDR',
+								locale: 'id-ID',
+							},
+						},
+					}" />
+
+				<app-message-validation [fieldState]="formData.amount()" />
+			</div>
+
+			<div class="tw:md:col-span-6">
+				<lib-dropdown
+					class="no-hint"
+					[field]="{
+						key: 'paymentType',
+						type: 'dropdown',
+						control: $any(formData.paymentType),
+						config: {
+							label: 'Payment Type',
+							options: {
+								data: opt.paymentType() || [],
+								labelKey: 'label',
+								valueKey: 'value',
+							},
+						},
+					}" />
+
+				<app-message-validation [fieldState]="formData.paymentType()" />
+			</div>
+
+			<div class="tw:md:col-span-6">
+				<lib-dropdown
+					class="no-hint"
+					[field]="{
+						key: 'paymentStatus',
+						type: 'dropdown',
+						control: $any(formData.paymentStatus),
+						config: {
+							label: 'Payment Status',
+							options: {
+								data: opt.paymentStatus() || [],
+								labelKey: 'label',
+								valueKey: 'value',
+							},
+						},
+					}" />
+
+				<app-message-validation [fieldState]="formData.paymentStatus()" />
+			</div>
+
+			<div class="tw:md:col-span-6">
+				<lib-datepicker
+					class="no-hint"
+					[field]="{
+						key: 'paidAt',
+						type: 'datepicker',
+						control: $any(formData.paidAt),
+						config: {
+							label: 'Paid At',
+							datepicker: {
+								minDate: today(),
+							},
+						},
+					}" />
+			</div>
+
+			<div class="tw:md:col-span-12">
+				<lib-textarea
+					class="no-hint"
+					[field]="{
+						key: 'note',
+						type: 'textarea',
+						control: $any(formData.note),
+						config: {
+							label: 'Note',
+						},
+					}" />
+
+				<app-message-validation [fieldState]="formData.note()" />
+			</div>
+		</div>
+	</ng-container>
+	<ng-container actions>
+		<div class="tw-flex tw-justify-between tw-gap-3">
+			<button matButton [disabled]="formData().submitting()" (click)="dialogRef.close()">
+				Close
+			</button>
+			<button
+				matButton="filled"
+				[disabled]="formData().submitting()"
+				(click)="handleSubmit()">
+				Submit
+			</button>
+		</div>
+	</ng-container>
+</lib-dialog>

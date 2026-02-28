@@ -1,0 +1,35 @@
+<div class="tw:flex tw:justify-end tw:mb-4">
+	<lib-button [config]="button.addNew()" />
+</div>
+
+<lib-table
+	[config]="tableModel"
+	(sortChange)="sortChange($event)"
+	(pageChange)="pageChange($event)">
+	<ng-template #customTemplate let-data="data" let-key="key">
+		@if (key === 'paymentNumber') {
+			<span class="tw:font-semibold">
+				{{ data.paymentNumber }}
+			</span>
+		} @else if (key === 'amount') {
+			<span class="tw:font-semibold tw:text-green-700">
+				{{ +data.amount | currencyIntl: 'IDR' : 'id-ID' }}
+			</span>
+		} @else if (key === 'paymentStatus') {
+			<app-status-badge [status]="data.paymentStatus" />
+		} @else if (key === 'actions' && data.paymentStatus !== 'paid') {
+			<div class="tw:flex tw:gap-3">
+				<fa-icon
+					[icon]="faIcon.faEdit"
+					size="lg"
+					class="tw:text-blue-400"
+					(click)="openFormDialog(data)" />
+				<fa-icon
+					[icon]="faIcon.faTrash"
+					size="lg"
+					class="tw:text-red-400"
+					(click)="onAction('delete', data?.id)" />
+			</div>
+		}
+	</ng-template>
+</lib-table>
