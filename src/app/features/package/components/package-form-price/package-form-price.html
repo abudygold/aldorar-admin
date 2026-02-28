@@ -1,0 +1,178 @@
+<lib-button [config]="addNewButton()" class="tw:flex tw:justify-end tw:mb-3" />
+
+<mat-accordion>
+	@for (price of form().prices; track $index) {
+		<mat-expansion-panel
+			class="tw:shadow-md!"
+			[expanded]="step() === $index"
+			(opened)="setStep($index)"
+			hideToggle>
+			<mat-expansion-panel-header>
+				<mat-panel-title class="tw:capitalize">
+					Price {{ price.roomType().value() || $index + 1 }}
+				</mat-panel-title>
+				<mat-panel-description style="flex-grow: initial">
+					<fa-icon
+						[icon]="faIcon.faTrash"
+						class="tw:text-red-400"
+						(click)="dropPrice($event, $index)" />
+				</mat-panel-description>
+			</mat-expansion-panel-header>
+
+			<div class="tw:grid tw:md:grid-cols-12 tw:gap-4 tw:py-3">
+				<div class="tw:md:col-span-6">
+					<lib-dropdown
+						class="no-hint"
+						[field]="{
+							key: 'roomType',
+							type: 'dropdown',
+							control: $any(price.roomType),
+							config: {
+								label: 'Room Type',
+								options: {
+									data: options().roomType || [],
+									labelKey: 'label',
+									valueKey: 'value',
+								},
+							},
+						}" />
+
+					<app-message-validation [fieldState]="price.roomType()" />
+				</div>
+
+				<div class="tw:md:col-span-6">
+					<lib-textbox-currency
+						class="no-hint"
+						[field]="{
+							key: 'price',
+							type: 'textbox',
+							control: $any(price.price),
+							config: {
+								label: 'Price',
+								texboxCurrency: {
+									currency: 'IDR',
+									locale: 'id-ID',
+								},
+							},
+						}" />
+
+					<app-message-validation [fieldState]="price.price()" />
+				</div>
+
+				<div class="tw:md:col-span-6">
+					<lib-textbox-currency
+						class="no-hint"
+						[field]="{
+							key: 'dpAmount',
+							type: 'textbox',
+							control: $any(price.dpAmount),
+							config: {
+								label: 'DP Amount',
+								texboxCurrency: {
+									currency: 'IDR',
+									locale: 'id-ID',
+								},
+							},
+						}" />
+
+					<app-message-validation [fieldState]="price.dpAmount()" />
+				</div>
+
+				<div class="tw:md:col-span-6">
+					<lib-textbox-currency
+						class="no-hint"
+						[field]="{
+							key: 'childPrice',
+							type: 'textbox',
+							control: $any(price.childPrice),
+							config: {
+								label: 'Child Price',
+								texboxCurrency: {
+									currency: 'IDR',
+									locale: 'id-ID',
+								},
+							},
+						}" />
+
+					<app-message-validation [fieldState]="price.childPrice()" />
+				</div>
+
+				<div class="tw:md:col-span-6">
+					<lib-textbox-currency
+						class="no-hint"
+						[field]="{
+							key: 'infantPrice',
+							type: 'textbox',
+							control: $any(price.infantPrice),
+							config: {
+								label: 'Infant Price',
+								texboxCurrency: {
+									currency: 'IDR',
+									locale: 'id-ID',
+								},
+							},
+						}" />
+
+					<app-message-validation [fieldState]="price.infantPrice()" />
+				</div>
+
+				<div class="tw:md:col-span-6">
+					<lib-textbox
+						class="no-hint"
+						[field]="{
+							key: 'currency',
+							type: 'textbox',
+							control: $any(price.currency),
+							config: {
+								label: 'Currency',
+							},
+						}" />
+				</div>
+
+				<div class="tw:md:col-span-6">
+					<lib-datepicker
+						class="no-hint"
+						[field]="{
+							key: 'validFrom',
+							type: 'datepicker',
+							control: $any(price.validFrom),
+							config: {
+								label: 'Valid From',
+								datepicker: {
+									minDate: today(),
+								},
+							},
+						}" />
+				</div>
+
+				<div class="tw:md:col-span-6">
+					<lib-datepicker
+						class="no-hint"
+						[field]="{
+							key: 'validUntil',
+							type: 'datepicker',
+							control: $any(price.validUntil),
+							config: {
+								label: 'Valid Until',
+								datepicker: {
+									minDate: today(),
+								},
+							},
+						}" />
+				</div>
+
+				<div class="tw:md:col-span-12">
+					<lib-slide-toggle
+						[field]="{
+							key: 'isActive',
+							type: 'slide-toggle',
+							control: $any(price.isActive),
+							config: {
+								label: 'Active',
+							},
+						}" />
+				</div>
+			</div>
+		</mat-expansion-panel>
+	}
+</mat-accordion>

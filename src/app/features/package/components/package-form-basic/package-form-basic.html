@@ -1,0 +1,101 @@
+<div class="tw:grid tw:md:grid-cols-12 tw:gap-4">
+	<div class="tw:md:col-span-12">
+		<lib-textbox
+			class="no-hint"
+			[field]="{
+				key: 'title',
+				type: 'textbox',
+				control: $any(form().title),
+				config: {
+					label: 'Package Name',
+				},
+			}" />
+
+		<app-message-validation [fieldState]="form().title()" />
+	</div>
+
+	<div class="tw:md:col-span-6">
+		<lib-dropdown
+			class="no-hint"
+			[field]="{
+				key: 'packageType',
+				type: 'dropdown',
+				control: $any(form().packageType),
+				config: {
+					label: 'Package Type',
+					options: {
+						data: options().packageType || [],
+						labelKey: 'label',
+						valueKey: 'value',
+					},
+				},
+			}" />
+
+		<app-message-validation [fieldState]="form().title()" />
+	</div>
+
+	<div class="tw:md:col-span-6">
+		<lib-dropdown
+			class="no-hint"
+			[field]="{
+				key: 'tripType',
+				type: 'dropdown',
+				control: $any(form().tripType),
+				config: {
+					label: 'Trip Type',
+					options: {
+						data: options().tripType || [],
+						labelKey: 'label',
+						valueKey: 'value',
+					},
+				},
+			}" />
+
+		<app-message-validation [fieldState]="form().title()" />
+	</div>
+
+	<div class="tw:md:col-span-6">
+		<lib-textbox
+			class="no-hint"
+			[field]="{
+				key: 'durationDays',
+				type: 'textbox',
+				control: $any(form().durationDays),
+				onChange: durationChangeHandle.bind(this),
+				config: {
+					label: 'Duration Days',
+					textboxType: 'number',
+				},
+			}" />
+
+		<app-message-validation [fieldState]="form().durationDays()" />
+	</div>
+
+	<div class="tw:md:col-span-6">
+		<lib-textbox
+			class="no-hint"
+			[field]="{
+				key: 'quota',
+				type: 'textbox',
+				control: $any(form().quota),
+				config: {
+					label: 'Quota',
+					textboxType: 'number',
+				},
+			}" />
+
+		<app-message-validation [fieldState]="form().quota()" />
+	</div>
+
+	<div class="tw:md:col-span-6">
+		<lib-slide-toggle
+			[field]="{
+				key: 'isPublish',
+				type: 'slide-toggle',
+				control: $any(form().isPublish),
+				config: {
+					label: 'Publish Package',
+				},
+			}" />
+	</div>
+</div>

@@ -2,13 +2,11 @@ import {
 	faAddressCard,
 	faBook,
 	faDashboard,
-	faFolderTree,
+	faFile,
 	faLayerGroup,
 	faMoneyBillTransfer,
 	faNewspaper,
-	faPeopleGroup,
 	faSuitcase,
-	faTags,
 } from '@fortawesome/free-solid-svg-icons';
 
 export interface NavItem {
@@ -23,76 +21,48 @@ export interface NavItem {
 
 export const NAVIGATION_MENU: NavItem[] = [
 	{
-		label: 'menus.dashboard',
+		label: 'pages.dashboard.label',
 		icon: faDashboard,
 		path: '/',
 	},
 	{
-		label: 'menus.myAccount',
+		label: 'pages.myAccount.label',
 		icon: faAddressCard,
-		path: '/',
+		path: 'secure/profile',
 	},
 	{
-		label: 'menus.administrativeManagement.label',
-		icon: faFolderTree,
-		submenu: [
-			{
-				label: 'menus.administrativeManagement.package',
-				icon: faSuitcase,
-				path: 'secure/package',
-			},
-			{
-				label: 'menus.administrativeManagement.price',
-				icon: faTags,
-				path: 'secure/package/price',
-			},
-			{
-				label: 'menus.administrativeManagement.participant',
-				icon: faPeopleGroup,
-				path: 'secure/package/participant',
-			},
-			{
-				label: 'menus.administrativeManagement.transaction',
-				icon: faBook,
-				path: 'secure/package/transaction',
-			},
-			{
-				label: 'menus.administrativeManagement.payment',
-				icon: faMoneyBillTransfer,
-				path: 'secure/package/payment',
-			},
-		],
+		label: 'pages.package.label',
+		icon: faSuitcase,
+		path: 'secure/package',
 	},
 	{
-		label: 'menus.contentManagement.label',
-		icon: faFolderTree,
-		submenu: [
-			{
-				label: 'menus.contentManagement.blog',
-				icon: faNewspaper,
-				path: 'secure/blog',
-			},
-			{
-				label: 'menus.contentManagement.blogCategories',
-				icon: faLayerGroup,
-				path: 'secure/blog/categories',
-			},
-		],
+		label: 'pages.travelers.label',
+		icon: faAddressCard,
+		path: 'secure/traveler',
 	},
-	/* {
-		label: 'Pengaturan Web',
-		icon: 'circleInfo',
-		submenu: [
-			{
-				label: 'Blog',
-				icon: 'chevronRight',
-				path: '/package/umrah-package',
-			},
-			{
-				label: 'Kategori',
-				icon: 'chevronRight',
-				path: '/package/umrah-private',
-			},
-		],
-	}, */
+	{
+		label: 'pages.transaction.label',
+		icon: faBook,
+		path: 'secure/transaction',
+	},
+	{
+		label: 'pages.payment.label',
+		icon: faMoneyBillTransfer,
+		path: 'secure/payment',
+	},
+	{
+		label: 'pages.document.label',
+		icon: faFile,
+		path: 'secure/document',
+	},
+	{
+		label: 'pages.blog.label',
+		icon: faNewspaper,
+		path: 'secure/blog',
+	},
+	{
+		label: 'pages.category.label',
+		icon: faLayerGroup,
+		path: 'secure/categories',
+	},
 ];

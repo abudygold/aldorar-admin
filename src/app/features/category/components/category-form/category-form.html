@@ -1,0 +1,17 @@
+<lib-dialog [title]="data ? 'Edit Category' : 'Add Category'">
+	<ng-container content>
+		<div class="tw:pt-5">
+			<lib-formly [formConfig]="formConfig()" />
+		</div>
+	</ng-container>
+	<ng-container actions>
+		<div class="tw-flex tw-justify-between tw-gap-3">
+			<button matButton [disabled]="formData().submitting()" (click)="dialogRef.close()">
+				Close
+			</button>
+			<button matButton="filled" [disabled]="formData().submitting()" (click)="handleSubmit()">
+				Submit
+			</button>
+		</div>
+	</ng-container>
+</lib-dialog>

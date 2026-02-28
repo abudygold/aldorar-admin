@@ -1,0 +1,5 @@
+@if (getFieldState().touched() && getFieldState().invalid()) {
+	@for (error of getFieldState().errors(); track error.kind) {
+		<mat-error>{{ error.message }}</mat-error>
+	}
+}

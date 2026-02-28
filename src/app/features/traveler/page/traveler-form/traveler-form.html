@@ -1,0 +1,230 @@
+@defer (when !isPageLoaded()) {
+	<div class="tw:my-4">
+		@if (id()) {
+			<ng-container
+				[ngTemplateOutlet]="formTmp"
+				[ngTemplateOutletContext]="{ traveler: formData.traveler }" />
+		} @else {
+			<lib-button [config]="btn.add()" class="tw:flex tw:justify-end tw:mb-3" />
+
+			<mat-accordion>
+				@for (traveler of formData.travelers; track $index) {
+					<mat-expansion-panel
+						class="tw:shadow-md!"
+						[expanded]="step() === $index"
+						(opened)="setStep($index)"
+						hideToggle>
+						<mat-expansion-panel-header>
+							<mat-panel-title class="tw:capitalize">
+								Traveler
+								{{
+									traveler.firstName().value() +
+										' ' +
+										traveler.lastName().value() || $index + 1
+								}}
+							</mat-panel-title>
+							<mat-panel-description style="flex-grow: initial">
+								<fa-icon
+									[icon]="faIcon.faTrash"
+									class="tw:text-red-400"
+									(click)="removeTraveler($event, $index)" />
+							</mat-panel-description>
+						</mat-expansion-panel-header>
+
+						<ng-container
+							[ngTemplateOutlet]="formTmp"
+							[ngTemplateOutletContext]="{ traveler }" />
+					</mat-expansion-panel>
+				}
+			</mat-accordion>
+		}
+	</div>
+
+	<mat-divider />
+
+	<div class="tw:flex tw:justify-between tw:my-4">
+		<lib-button [config]="btn.cancel()" />
+		<lib-button [config]="btn.save()" />
+	</div>
+} @placeholder {
+	<div class="tw:flex tw:justify-center">
+		<mat-progress-spinner mode="indeterminate" [value]="50" />
+	</div>
+}
+
+<ng-template #formTmp let-traveler="traveler">
+	<div class="tw:grid tw:md:grid-cols-12 tw:gap-4">
+		<div class="tw:md:col-span-6">
+			<lib-textbox
+				class="no-hint"
+				[field]="{
+					key: 'firstName',
+					type: 'textbox',
+					control: $any(traveler.firstName),
+					config: {
+						label: 'First Name',
+					},
+				}" />
+
+			<app-message-validation [fieldState]="traveler.firstName()" />
+		</div>
+
+		<div class="tw:md:col-span-6">
+			<lib-textbox
+				class="no-hint"
+				[field]="{
+					key: 'lastName',
+					type: 'textbox',
+					control: $any(traveler.lastName),
+					config: {
+						label: 'Last Name',
+					},
+				}" />
+
+			<app-message-validation [fieldState]="traveler.lastName()" />
+		</div>
+
+		<div class="tw:md:col-span-6">
+			<lib-dropdown
+				class="no-hint"
+				[field]="{
+					key: 'gender',
+					type: 'dropdown',
+					control: $any(traveler.gender),
+					config: {
+						label: 'Gender',
+						options: {
+							data: [
+								{ label: 'Male', value: 'male' },
+								{ label: 'Female', value: 'female' },
+							],
+							labelKey: 'label',
+							valueKey: 'value',
+						},
+					},
+				}" />
+
+			<app-message-validation [fieldState]="traveler.gender()" />
+		</div>
+
+		<div class="tw:md:col-span-6">
+			<lib-datepicker
+				class="no-hint"
+				[field]="{
+					key: 'birthDate',
+					type: 'datepicker',
+					control: $any(traveler.birthDate),
+					config: {
+						label: 'Birth Date',
+					},
+				}" />
+
+			<app-message-validation [fieldState]="traveler.birthDate()" />
+		</div>
+
+		<div class="tw:md:col-span-6">
+			<lib-textbox
+				class="no-hint"
+				[field]="{
+					key: 'nationality',
+					type: 'textbox',
+					control: $any(traveler.nationality),
+					config: {
+						label: 'Nationality',
+					},
+				}" />
+
+			<app-message-validation [fieldState]="traveler.nationality()" />
+		</div>
+
+		<div class="tw:md:col-span-6">
+			<lib-textbox
+				class="no-hint"
+				[field]="{
+					key: 'phone',
+					type: 'textbox',
+					control: $any(traveler.phone),
+					config: {
+						label: 'Phone',
+					},
+				}" />
+
+			<app-message-validation [fieldState]="traveler.phone()" />
+		</div>
+
+		<div class="tw:md:col-span-6">
+			<lib-textbox
+				class="no-hint"
+				[field]="{
+					key: 'email',
+					type: 'textbox',
+					control: $any(traveler.email),
+					config: {
+						label: 'E-Mail',
+					},
+				}" />
+
+			<app-message-validation [fieldState]="traveler.email()" />
+		</div>
+
+		<div class="tw:md:col-span-6">
+			<lib-textbox
+				class="no-hint"
+				[field]="{
+					key: 'passportNumber',
+					type: 'textbox',
+					control: $any(traveler.passportNumber),
+					config: {
+						label: 'Passport Number',
+					},
+				}" />
+
+			<app-message-validation [fieldState]="traveler.passportNumber()" />
+		</div>
+
+		<div class="tw:md:col-span-6">
+			<lib-datepicker
+				class="no-hint"
+				[field]="{
+					key: 'passportIssuedDate',
+					type: 'datepicker',
+					control: $any(traveler.passportIssuedDate),
+					config: {
+						label: 'Passport Issued Date',
+					},
+				}" />
+
+			<app-message-validation [fieldState]="traveler.passportIssuedDate()" />
+		</div>
+
+		<div class="tw:md:col-span-6">
+			<lib-datepicker
+				class="no-hint"
+				[field]="{
+					key: 'passportExpiredDate',
+					type: 'datepicker',
+					control: $any(traveler.passportExpiredDate),
+					config: {
+						label: 'Passport Expired Date',
+					},
+				}" />
+
+			<app-message-validation [fieldState]="traveler.passportExpiredDate()" />
+		</div>
+
+		<div class="tw:md:col-span-6">
+			<lib-textbox
+				class="no-hint"
+				[field]="{
+					key: 'passportIssuedCountry',
+					type: 'textbox',
+					control: $any(traveler.passportIssuedCountry),
+					config: {
+						label: 'Passport Issued Country',
+					},
+				}" />
+
+			<app-message-validation [fieldState]="traveler.passportIssuedCountry()" />
+		</div>
+	</div>
+</ng-template>

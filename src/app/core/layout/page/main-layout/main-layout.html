@@ -1,0 +1,46 @@
+<div class="tw:flex tw:flex-col tw:absolute tw:top-0 tw:bottom-0 tw:left-0 tw:right-0">
+	<app-main-layout-header [isMobile]="isMobile()" (toggleMenu)="snav.toggle()" />
+
+	<mat-sidenav-container
+		class="tw:flex-1"
+		[ngClass]="{
+			'tw:flex-[1_0_auto]': isMobile(),
+		}">
+		<mat-sidenav
+			#snav
+			[mode]="isMobile() ? 'over' : 'side'"
+			[opened]="isMobile() ? false : true"
+			[fixedInViewport]="isMobile()"
+			fixedTopGap="56"
+			class="tw:rounded-none!">
+			<app-main-layout-sidebar
+				[snav]="snav"
+				[isMobile]="isMobile()"
+				(toggleMenu)="isMobile() ? snav.toggle() : null" />
+		</mat-sidenav>
+
+		<mat-sidenav-content [style.marginTop.px]="isMobile() ? 56 : 0">
+			<div class="tw:m-6">
+				<lib-breadcrumb [breadcrumbs]="breadcrumbs" />
+			</div>
+
+			<div
+				class="tw:m-6 tw:md:mb-16 page-wrapper"
+				[class.page-enter]="isNavigating"
+				(animationend)="onAnimationEnd()">
+				<div class="tw:mb-4">
+					<p class="tw:text-2xl tw:font-semibold tw:mb-1">{{ heading?.title }}</p>
+					<p class="tw:text-sm">{{ heading?.subtitle }}</p>
+				</div>
+
+				<div class="tw:bg-white tw:p-6 tw:rounded-xl tw:shadow-md">
+					<router-outlet />
+				</div>
+			</div>
+
+			<div class="tw:fixed tw:w-full tw:bottom-0 tw:z-10">
+				<app-main-layout-footer />
+			</div>
+		</mat-sidenav-content>
+	</mat-sidenav-container>
+</div>

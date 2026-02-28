@@ -1,0 +1,161 @@
+<lib-button [config]="addNewButton()" class="tw:flex tw:justify-end tw:mb-3" />
+
+<mat-accordion>
+	@for (flight of form().flights; track $index) {
+		<mat-expansion-panel
+			class="tw:shadow-md!"
+			[expanded]="step() === $index"
+			(opened)="setStep($index)"
+			hideToggle>
+			<mat-expansion-panel-header>
+				<mat-panel-title class="tw:capitalize">
+					Flight {{ flight.airline().value() || $index + 1 }} ({{
+						flight.departureAirport().value()
+					}}
+					- {{ flight.arrivalAirport().value() }})
+				</mat-panel-title>
+				<mat-panel-description style="flex-grow: initial">
+					<fa-icon
+						[icon]="faIcon.faTrash"
+						class="tw:text-red-400"
+						(click)="dropFlight($event, $index)" />
+				</mat-panel-description>
+			</mat-expansion-panel-header>
+
+			<div class="tw:grid tw:md:grid-cols-12 tw:gap-4 tw:py-3">
+				<div class="tw:md:col-span-6">
+					<lib-dropdown
+						class="no-hint"
+						[field]="{
+							key: 'flightType',
+							type: 'dropdown',
+							control: $any(flight.flightType),
+							config: {
+								label: 'Package Type',
+								options: {
+									data: options().flightType || [],
+									labelKey: 'label',
+									valueKey: 'value',
+								},
+							},
+						}" />
+
+					<app-message-validation [fieldState]="flight.flightType()" />
+				</div>
+
+				<div class="tw:md:col-span-6">
+					<lib-datepicker
+						class="no-hint"
+						[field]="{
+							key: 'flightDate',
+							type: 'datepicker',
+							control: $any(flight.flightDate),
+							config: {
+								label: 'Flight Date',
+								datepicker: {
+									minDate: today()
+								}
+							},
+						}" />
+
+					<app-message-validation [fieldState]="flight.flightDate()" />
+				</div>
+
+				<div class="tw:md:col-span-6">
+					<lib-dropdown
+						class="no-hint"
+						[field]="{
+							key: 'airline',
+							type: 'dropdown',
+							control: $any(flight.airline),
+							config: {
+								label: 'Airline',
+								options: {
+									data: options().airlines || [],
+									labelKey: 'label',
+									valueKey: 'value',
+								},
+							},
+						}" />
+
+					<app-message-validation [fieldState]="flight.airline()" />
+				</div>
+
+				<div class="tw:md:col-span-6">
+					<lib-textbox
+						class="no-hint"
+						[field]="{
+							key: 'flightNumber',
+							type: 'textbox',
+							control: $any(flight.flightNumber),
+							config: {
+								label: 'Flight Number',
+							},
+						}" />
+
+					<app-message-validation [fieldState]="flight.flightNumber()" />
+				</div>
+
+				<div class="tw:md:col-span-6">
+					<lib-dropdown
+						class="no-hint"
+						[field]="{
+							key: 'flightClass',
+							type: 'dropdown',
+							control: $any(flight.flightClass),
+							config: {
+								label: 'Flight Class',
+								options: {
+									data: options().flightClass || [],
+									labelKey: 'label',
+									valueKey: 'value',
+								},
+							},
+						}" />
+
+					<app-message-validation [fieldState]="flight.flightClass()" />
+				</div>
+
+				<div class="tw:md:col-span-6">
+					<lib-dropdown
+						class="no-hint"
+						[field]="{
+							key: 'departureAirport',
+							type: 'dropdown',
+							control: $any(flight.departureAirport),
+							config: {
+								label: 'Departure Airport',
+								options: {
+									data: options().airports || [],
+									labelKey: 'label',
+									valueKey: 'value',
+								},
+							},
+						}" />
+
+					<app-message-validation [fieldState]="flight.departureAirport()" />
+				</div>
+
+				<div class="tw:md:col-span-6">
+					<lib-dropdown
+						class="no-hint"
+						[field]="{
+							key: 'arrivalAirport',
+							type: 'dropdown',
+							control: $any(flight.arrivalAirport),
+							config: {
+								label: 'Arrival Airport',
+								options: {
+									data: options().airports || [],
+									labelKey: 'label',
+									valueKey: 'value',
+								},
+							},
+						}" />
+
+					<app-message-validation [fieldState]="flight.arrivalAirport()" />
+				</div>
+			</div>
+		</mat-expansion-panel>
+	}
+</mat-accordion>

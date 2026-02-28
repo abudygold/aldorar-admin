@@ -1,0 +1,61 @@
+@defer (when !isPageLoaded()) {
+	<app-package-form-basic
+		[form]="formData"
+		[formModel]="formModel"
+		[options]="{
+			tripType: this.opt.tripType(),
+			packageType: this.opt.packageType(),
+		}" />
+
+	<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" class="tw:my-4">
+		<mat-tab label="Flight">
+			<div class="tw:mx-1 tw:my-3">
+				<app-package-form-flight
+					[form]="formData"
+					[formModel]="formModel"
+					[options]="{
+						flightType: this.opt.flightType(),
+						flightClass: this.opt.flightClass(),
+						airlines: this.opt.airlines(),
+						airports: this.opt.airports(),
+					}" />
+			</div>
+		</mat-tab>
+		<mat-tab label="Hotel">
+			<div class="tw:mx-1 tw:my-3">
+				<app-package-form-hotel [form]="formData" [formModel]="formModel" />
+			</div>
+		</mat-tab>
+		<mat-tab label="Price">
+			<div class="tw:mx-1 tw:my-3">
+				<app-package-form-price
+					[form]="formData"
+					[formModel]="formModel"
+					[options]="{
+						roomType: this.opt.roomType(),
+					}" />
+			</div>
+		</mat-tab>
+		<mat-tab label="Bonus">
+			<div class="tw:mx-1 tw:my-3">
+				<app-package-form-bonus [form]="formData" [formModel]="formModel" />
+			</div>
+		</mat-tab>
+		<mat-tab label="Itinerary">
+			<div class="tw:mx-1 tw:my-3">
+				<app-package-form-itinerary [form]="formData" [formModel]="formModel" />
+			</div>
+		</mat-tab>
+	</mat-tab-group>
+
+	<mat-divider />
+
+	<div class="tw:flex tw:justify-between tw:my-4">
+		<lib-button [config]="btn.cancel()" />
+		<lib-button [config]="btn.save()" />
+	</div>
+} @placeholder {
+	<div class="tw:flex tw:justify-center">
+		<mat-progress-spinner mode="indeterminate" [value]="50" />
+	</div>
+}

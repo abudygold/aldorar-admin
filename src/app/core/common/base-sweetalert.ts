@@ -13,7 +13,22 @@ export const BaseAlert = (
 		icon,
 		title,
 		text,
-		draggable: true,
+		draggable: false,
+		showConfirmButton: false,
+		timer: 1500,
+	});
+};
+
+export const BaseAlertHTML = (
+	title: string,
+	text: string,
+	icon: 'warning' | 'error' | 'success' | 'info',
+) => {
+	Swal.fire({
+		icon,
+		title,
+		html: text,
+		draggable: false,
 		showConfirmButton: false,
 		timer: 1500,
 	});

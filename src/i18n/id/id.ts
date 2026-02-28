@@ -1,70 +1,95 @@
 export const ID_TRANSLATION = {
-	menus: {
-		dashboard: 'Dashboard',
-		myAccount: 'Profil Saya',
-		administrativeManagement: {
-			label: 'Manajemen Administrasi',
-			package: 'Paket',
-			price: 'Harga & Biaya',
-			participant: 'Anggota',
-			transaction: 'Transaksi',
-			payment: 'Pembayaran',
-		},
-		contentManagement: {
-			label: 'Manajemen Konten',
-			blog: 'Artikel',
-			addBlog: 'Tambah Artikel',
-			editBlog: 'Ubah Artikel',
-			blogCategories: 'Kategori Artikel',
-		},
-	},
-	title: {
+	pages: {
 		dashboard: {
-			title: 'Dashboard',
-			subtitle: 'Ringkasan aktivitas dan informasi utama',
+			label: 'Dashboard',
+			desc: 'Ringkasan aktivitas dan informasi utama',
 		},
 		myAccount: {
-			title: 'Profil Saya',
-			subtitle: 'Kelola informasi dan pengaturan akun Anda',
+			label: 'Profil Saya',
+			desc: 'Kelola informasi dan pengaturan akun Anda',
 		},
-		administrativeManagement: {
-			package: {
-				title: 'Paket',
-				subtitle: 'Kelola data paket perjalanan',
+		package: {
+			label: 'Paket wisata',
+			desc: 'Kelola dan atur paket wisata yang tersedia',
+			add: {
+				label: 'Tambah Paket',
+				desc: 'Tambahkan data paket baru',
 			},
-			price: {
-				title: 'Harga & Biaya',
-				subtitle: 'Atur harga, biaya, dan komponen pembayaran',
-			},
-			participant: {
-				title: 'Anggota',
-				subtitle: 'Kelola data anggota atau jamaah',
-			},
-			transaction: {
-				title: 'Transaksi',
-				subtitle: 'Pantau dan kelola seluruh transaksi',
-			},
-			payment: {
-				title: 'Pembayaran',
-				subtitle: 'Kelola status dan metode pembayaran',
+			edit: {
+				label: 'Ubah Paket',
+				desc: 'Ubah dan perbarui data paket',
 			},
 		},
-		contentManagement: {
-			blog: {
-				title: 'Artikel',
-				subtitle: 'Kelola dan publikasi artikel',
+		travelers: {
+			label: 'Wisatawan',
+			desc: 'Kelola data wisatawan dan informasi terkait',
+			add: {
+				label: 'Tambah Wisatawan',
+				desc: 'Tambahkan data wisatawan baru',
 			},
-			addBlog: {
-				title: 'Tambah Artikel',
-				subtitle: 'Tambahkan artikel baru',
+			edit: {
+				label: 'Ubah Wisatawan',
+				desc: 'Ubah dan perbarui data wisatawan',
 			},
-			editBlog: {
-				title: 'Ubah Artikel',
-				subtitle: 'Ubah dan perbarui artikel',
+		},
+		transaction: {
+			label: 'Transaksi',
+			desc: 'Pantau dan kelola transaksi yang terjadi',
+			add: {
+				label: 'Tambah Transaksi',
+				desc: 'Tambahkan transaksi baru',
 			},
-			blogCategories: {
-				title: 'Kategori Artikel',
-				subtitle: 'Atur kategori untuk pengelompokan artikel',
+			edit: {
+				label: 'Ubah Transaksi',
+				desc: 'Ubah dan perbarui transaksi',
+			},
+		},
+		payment: {
+			label: 'Pembayaran',
+			desc: 'Kelola status dan metode pembayaran',
+			add: {
+				label: 'Tambah Pembayaran',
+				desc: 'Tambahkan pembayaran baru',
+			},
+			edit: {
+				label: 'Ubah Pembayaran',
+				desc: 'Ubah dan perbarui pembayaran',
+			},
+		},
+		document: {
+			label: 'Dokumen',
+			desc: 'Kelola dokumen penting terkait perjalanan',
+			add: {
+				label: 'Tambah Dokumen',
+				desc: 'Tambahkan dokumen baru',
+			},
+			edit: {
+				label: 'Ubah Dokumen',
+				desc: 'Ubah dan perbarui dokumen',
+			},
+		},
+		blog: {
+			label: 'Artikel',
+			desc: 'Kelola dan publikasi artikel terkait perjalanan',
+			add: {
+				label: 'Tambah Artikel',
+				desc: 'Tambahkan artikel baru',
+			},
+			edit: {
+				label: 'Ubah Artikel',
+				desc: 'Ubah dan perbarui artikel',
+			},
+		},
+		category: {
+			label: 'Kategori',
+			desc: 'Atur kategori untuk pengelompokan konten',
+			add: {
+				label: 'Tambah Kategori',
+				desc: 'Tambahkan kategori baru',
+			},
+			edit: {
+				label: 'Ubah Kategori',
+				desc: 'Ubah dan perbarui kategori',
 			},
 		},
 	},

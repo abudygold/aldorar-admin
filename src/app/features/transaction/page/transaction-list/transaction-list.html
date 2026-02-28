@@ -1,0 +1,45 @@
+<div class="tw:flex tw:justify-end tw:mb-4">
+	<lib-button [config]="button.addNew()" />
+</div>
+
+<lib-table
+	[config]="tableModel"
+	(sortChange)="sortChange($event)"
+	(pageChange)="pageChange($event)">
+	<ng-template #customTemplate let-data="data" let-key="key">
+		@if (key === 'invoiceNumber') {
+			<span class="tw:font-semibold">
+				{{ data.invoiceNumber }}
+			</span>
+		} @else if (key === 'totalAmount') {
+			<span class="tw:font-semibold">
+				{{ +data.totalAmount | currencyIntl: 'IDR' : 'id-ID' }}
+			</span>
+		} @else if (key === 'totalPaid') {
+			<span class="tw:font-semibold tw:text-green-700">
+				{{ +data.totalPaid | currencyIntl: 'IDR' : 'id-ID' }}
+			</span>
+		} @else if (key === 'remainingAmount') {
+			<span class="tw:font-semibold tw:text-yellow-700">
+				{{ +data.remainingAmount | currencyIntl: 'IDR' : 'id-ID' }}
+			</span>
+		} @else if (key === 'paymentStatus') {
+			<app-status-badge [status]="data.paymentStatus" />
+		} @else if (key === 'bookingStatus') {
+			<app-status-badge [status]="data.bookingStatus" />
+		} @else if (key === 'actions') {
+			<div class="tw:flex tw:gap-3">
+				<fa-icon
+					[icon]="faIcon.faEdit"
+					size="lg"
+					class="tw:text-blue-400"
+					(click)="onAction('edit', data?.id)" />
+				<fa-icon
+					[icon]="faIcon.faTrash"
+					size="lg"
+					class="tw:text-red-400"
+					(click)="onAction('delete', data?.id)" />
+			</div>
+		}
+	</ng-template>
+</lib-table>
