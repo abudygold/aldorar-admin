@@ -69,3 +69,12 @@ export const TRANSACTION_EDIT_TITLE: ITitle = {
 export const PAYMENT_LIST_TITLE: ITitle = {
 	title: 'pages.payment',
 };
+
+/* DOCUMENT MENU */
+export const DOCUMENT_LIST_TITLE: ITitle = {
+	title: 'pages.document',
+};
+
+export const DOCUMENT_EDIT_TITLE: ITitle = {
+	title: 'pages.document.edit',
+};

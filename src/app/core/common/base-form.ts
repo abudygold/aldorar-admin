@@ -55,8 +55,16 @@ export class BaseForm<FormModel> {
 		});
 	}
 
-	sendToApi(URL: string, bodyReq: any = null, params?: object, callbackFn?: VoidFunction): void {
-		submit(this.formData, async () => this.#onSubmitService(URL, bodyReq, params, callbackFn));
+	sendToApi(
+		URL: string,
+		bodyReq: any = null,
+		params?: object,
+		callbackFn?: VoidFunction,
+		errorFn?: VoidFunction,
+	): void {
+		submit(this.formData, async () =>
+			this.#onSubmitService(URL, bodyReq, params, callbackFn, errorFn),
+		);
 	}
 
 	#onSubmitService(
@@ -64,6 +72,7 @@ export class BaseForm<FormModel> {
 		bodyReq: any = null,
 		params?: any,
 		callbackFn?: VoidFunction,
+		errorFn?: VoidFunction,
 	): void {
 		const URI = `${URL}${this.id() ? `/${this.id()}` : ''}${
 			params
@@ -82,6 +91,9 @@ export class BaseForm<FormModel> {
 				);
 
 				if (callbackFn) callbackFn();
+			},
+			error: (err) => {
+				if (errorFn) errorFn();
 			},
 		});
 	}

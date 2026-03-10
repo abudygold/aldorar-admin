@@ -81,6 +81,9 @@ export class PackageForm extends BaseForm<IPackageForm> {
 	}
 
 	handleSubmit(): void {
+		this.btn.save().disabled?.update((_) => true);
+		this.btn.cancel().disabled?.update((_) => true);
+
 		this.sendToApi(PACKAGE_URL, this.formModel(), {}, () => this.navigateToList());
 	}
 

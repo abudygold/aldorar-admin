@@ -1,5 +1,6 @@
 export * from './blog-table';
 export * from './category-table';
+export * from './document-table';
 export * from './package-table';
 export * from './payment-table';
 export * from './transaction-table';

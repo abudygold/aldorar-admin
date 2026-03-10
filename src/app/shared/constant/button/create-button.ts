@@ -1,3 +1,4 @@
+import { signal } from '@angular/core';
 import { ButtonModel } from '@devkitify/angular-ui-kit';
 
 export const ADD_NEW_BUTTON = (
@@ -18,6 +19,7 @@ export const SAVE_BUTTON = (
 	appearance: 'flat',
 	icon: 'send',
 	buttonClass: 'tw:min-w-32!',
+	disabled: signal<boolean>(false),
 	onClick,
 });
 
@@ -28,5 +30,6 @@ export const CANCEL_BUTTON = (
 	text,
 	appearance: 'stroked',
 	buttonClass: 'tw:min-w-32!',
+	disabled: signal<boolean>(false),
 	onClick,
 });

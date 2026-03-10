@@ -24,3 +24,6 @@ export const TRANSACTION_URL = `${environment.api.baseUrl}transaction`;
 
 /* PAYMENT */
 export const PAYMENT_URL = `${environment.api.baseUrl}payment`;
+
+/* DOCUMENT */
+export const DOCUMENT_URL = `${environment.api.baseUrl}traveler-documents`;

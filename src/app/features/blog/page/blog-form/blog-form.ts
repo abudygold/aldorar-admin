@@ -1,16 +1,21 @@
-import { NgTemplateOutlet } from '@angular/common';
 import { AfterViewInit, Component, signal } from '@angular/core';
-import { FormField } from '@angular/forms/signals';
-import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import {
+	Button,
+	ButtonModel,
+	Dropdown,
+	SlideToggle,
+	Textarea,
+	Textbox,
+} from '@devkitify/angular-ui-kit';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import { ClassicEditor } from 'ckeditor5';
 import { BaseForm } from '../../../../core/common';
+import { MessageValidation } from '../../../../shared/components/message-validation';
+import { CANCEL_BUTTON, SAVE_BUTTON } from '../../../../shared/constant/button';
 import { CKEDITOR_CONFIG } from '../../../../shared/constant/ckeditor';
 import {
 	BLOG_DEFAULT_STATE,
@@ -24,15 +29,16 @@ import { IHttpResponse } from '../../../../shared/interface/base';
 @Component({
 	selector: 'app-blog-form',
 	imports: [
-		NgTemplateOutlet,
-		FormField,
 		MatFormFieldModule,
 		MatInputModule,
-		MatSelectModule,
-		MatSlideToggleModule,
 		CKEditorModule,
+		Textbox,
+		Textarea,
+		Dropdown,
+		SlideToggle,
+		Button,
 		FontAwesomeModule,
-		MatButtonModule,
+		MessageValidation,
 	],
 	templateUrl: './blog-form.html',
 	styleUrl: './blog-form.css',
@@ -43,6 +49,10 @@ export class BlogForm extends BaseForm<IBlogReq> implements AfterViewInit {
 	opt = {
 		category: signal<any[]>([]),
 	};
+	btn = {
+		save: signal<ButtonModel>(SAVE_BUTTON('Submit', () => this.handleSubmit())),
+		cancel: signal<ButtonModel>(CANCEL_BUTTON('Kembali', () => this.goBackToList())),
+	};
 
 	faIcon = {
 		faPaperclip,
@@ -50,8 +60,6 @@ export class BlogForm extends BaseForm<IBlogReq> implements AfterViewInit {
 
 	constructor() {
 		super(BLOG_DEFAULT_STATE, (schemaPath) => BLOG_SCHEMA_FORM(schemaPath));
-
-		this.id.set(this.activatedRoute.snapshot.paramMap.get('id') || null);
 
 		this.getOptionService();
 		this.id() &&
@@ -100,6 +108,9 @@ export class BlogForm extends BaseForm<IBlogReq> implements AfterViewInit {
 	}
 
 	handleSubmit(): void {
+		this.btn.save().disabled?.update((_) => true);
+		this.btn.cancel().disabled?.update((_) => true);
+
 		const formData = new FormData();
 		for (const key in this.formData().value()) {
 			if (this.formData().value().hasOwnProperty(key)) {
