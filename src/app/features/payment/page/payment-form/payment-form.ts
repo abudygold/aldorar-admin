@@ -1,8 +1,9 @@
 import { Component, inject, signal } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {
 	Autocomplete,
+	Button,
+	ButtonModel,
 	Datepicker,
 	Dialog,
 	Dropdown,
@@ -12,6 +13,7 @@ import {
 } from '@devkitify/angular-ui-kit';
 import { BaseForm } from '../../../../core/common';
 import { MessageValidation } from '../../../../shared/components/message-validation';
+import { CANCEL_BUTTON, SAVE_BUTTON } from '../../../../shared/constant/button';
 import {
 	IPaymentForm,
 	PAYMENT_DEFAULT_STATE,
@@ -24,7 +26,6 @@ import { GetOptionsByCode, IHttpResponse, IOptionList } from '../../../../shared
 @Component({
 	selector: 'app-payment-form',
 	imports: [
-		MatButtonModule,
 		Dialog,
 		Textbox,
 		Textarea,
@@ -32,6 +33,7 @@ import { GetOptionsByCode, IHttpResponse, IOptionList } from '../../../../shared
 		TextboxCurrency,
 		Dropdown,
 		Datepicker,
+		Button,
 		MessageValidation,
 	],
 	templateUrl: './payment-form.html',
@@ -46,6 +48,10 @@ export class PaymentForm extends BaseForm<IPaymentForm> {
 		paymentStatus: signal<IOptionList[]>([]),
 		paymentType: signal<IOptionList[]>([]),
 		transaction: signal<any[]>([]),
+	};
+	btn = {
+		save: signal<ButtonModel>(SAVE_BUTTON('Submit', () => this.handleSubmit())),
+		cancel: signal<ButtonModel>(CANCEL_BUTTON('Close', () => this.dialogRef.close())),
 	};
 
 	private debounceTimer: any;
@@ -102,6 +108,10 @@ export class PaymentForm extends BaseForm<IPaymentForm> {
 			...this.formModel(),
 			amount: +this.formModel().amount,
 		};
+
+		this.btn.save().disabled?.update((_) => true);
+		this.btn.cancel().disabled?.update((_) => true);
+
 		this.sendToApi(PAYMENT_URL, bodyReq, {}, () => this.dialogRef.close(true));
 	}
 }

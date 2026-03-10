@@ -1,8 +1,8 @@
 import { Component, inject, signal, WritableSignal } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Dialog, Formly, FormlyFormConfig } from '@devkitify/angular-ui-kit';
+import { Button, ButtonModel, Dialog, Formly, FormlyFormConfig } from '@devkitify/angular-ui-kit';
 import { BaseForm } from '../../../../core/common';
+import { CANCEL_BUTTON, SAVE_BUTTON } from '../../../../shared/constant/button';
 import {
 	DEFAULT_STATE_CATEGORY,
 	IBlogCategoryReq,
@@ -13,13 +13,18 @@ import { CATEGORIES_URL } from '../../../../shared/constant/global';
 
 @Component({
 	selector: 'app-category-form',
-	imports: [Formly, Dialog, MatButtonModule],
+	imports: [Formly, Dialog, Button],
 	templateUrl: './category-form.html',
 	styleUrl: './category-form.css',
 })
 export class CategoryForm extends BaseForm<IBlogCategoryReq> {
 	protected dialogRef = inject(MatDialogRef<CategoryForm>);
 	protected data = inject(MAT_DIALOG_DATA);
+
+	btn = {
+		save: signal<ButtonModel>(SAVE_BUTTON('Submit', () => this.handleSubmit())),
+		cancel: signal<ButtonModel>(CANCEL_BUTTON('Close', () => this.dialogRef.close())),
+	};
 
 	formConfig!: WritableSignal<FormlyFormConfig>;
 
@@ -32,6 +37,11 @@ export class CategoryForm extends BaseForm<IBlogCategoryReq> {
 	}
 
 	handleSubmit(): void {
-		this.sendToApi(CATEGORIES_URL, this.formModel(), {}, () => this.dialogRef.close(true));
+		this.btn.save().disabled?.update((_) => true);
+		this.btn.cancel().disabled?.update((_) => true);
+
+		this.sendToApi(CATEGORIES_URL, this.formModel(), {}, () => {
+			this.dialogRef.close(true);
+		});
 	}
 }

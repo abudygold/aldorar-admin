@@ -1,0 +1,85 @@
+<mat-tab-group>
+	@for (document of formData.documents; track $index) {
+		<mat-tab [label]="displayWithLabel(document.documentType().value())">
+			<div class="tw:grid tw:gap-4 tw:pb-4 tw:pt-5">
+				<div>
+					<mat-form-field appearance="outline" class="tw:w-full no-hint">
+						<mat-label>File</mat-label>
+
+						<input
+							matInput
+							[value]="document.fileUrl().value() || document.file().value()?.name"
+							disabled />
+						<button
+							mat-icon-button
+							matSuffix
+							class="tw:mr-4 tw:cursor-pointer"
+							(click)="fileInput.click()">
+							<fa-icon [icon]="faIcon.faPaperclip" />
+						</button>
+
+						<input
+							hidden
+							(change)="onFileSelected($event, document)"
+							#fileInput
+							type="file"
+							id="file" />
+					</mat-form-field>
+				</div>
+
+				<div>
+					<lib-dropdown
+						class="no-hint"
+						[field]="{
+							key: 'status',
+							type: 'dropdown',
+							control: $any(document.status),
+							config: {
+								label: 'Status',
+								options: {
+									data: opt.status() || [],
+									labelKey: 'label',
+									valueKey: 'value',
+								},
+							},
+						}" />
+				</div>
+
+				<div>
+					<lib-textarea
+						class="no-hint"
+						[field]="{
+							key: 'note',
+							type: 'textarea',
+							control: $any(document.note),
+							config: {
+								label: 'Note',
+							},
+						}" />
+				</div>
+
+				@if (document.fileUrl().value()) {
+					<mat-accordion>
+						<mat-expansion-panel hideToggle>
+							<mat-expansion-panel-header>
+								<mat-panel-title> Preview File </mat-panel-title>
+							</mat-expansion-panel-header>
+
+							<iframe
+								class="tw:w-full tw:h-svh"
+								[src]="document.fileUrl().value() | sanitizeUrl"
+								[frameBorder]="0"></iframe>
+						</mat-expansion-panel>
+					</mat-accordion>
+				}
+			</div>
+		</mat-tab>
+	}
+</mat-tab-group>
+
+<hr class="tw:text-gray-300 tw:my-3 tw:shadow" />
+
+<div class="tw:flex tw:justify-between tw:my-4">
+	<lib-button [config]="btn.cancel()" />
+	<lib-button [config]="btn.save()" />
+</div>

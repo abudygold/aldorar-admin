@@ -187,6 +187,9 @@ export class TransactionForm extends BaseForm<ITransactionForm> {
 			pricePerPerson: pricePerPax,
 		};
 
+		this.btn.save().disabled?.update((_) => true);
+		this.btn.cancel().disabled?.update((_) => true);
+
 		this.sendToApi(TRANSACTION_URL, bodyReq, {}, () => this.navigateToList());
 	}
 

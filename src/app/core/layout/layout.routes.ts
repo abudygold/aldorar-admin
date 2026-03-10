@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { BLOG_ROUTES } from '../../features/blog/blog.routes';
 import { CATEGORY_ROUTES } from '../../features/category/category.routes';
+import { DOCUMENT_ROUTES } from '../../features/document/document.routes';
 import { PACKAGE_ROUTES } from '../../features/package/package.routes';
 import { PAYMENT_ROUTES } from '../../features/payment/payment.routes';
 import { TRANSACTION_ROUTES } from '../../features/transaction/transaction.routes';
@@ -28,6 +29,7 @@ export const LAYOUT_ROUTES: Routes = [
 			...TRAVELER_ROUTES,
 			...PAYMENT_ROUTES,
 			...TRANSACTION_ROUTES,
+			...DOCUMENT_ROUTES,
 		],
 	},
 ];

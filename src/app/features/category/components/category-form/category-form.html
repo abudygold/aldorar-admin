@@ -5,13 +5,9 @@
 		</div>
 	</ng-container>
 	<ng-container actions>
-		<div class="tw-flex tw-justify-between tw-gap-3">
-			<button matButton [disabled]="formData().submitting()" (click)="dialogRef.close()">
-				Close
-			</button>
-			<button matButton="filled" [disabled]="formData().submitting()" (click)="handleSubmit()">
-				Submit
-			</button>
+		<div class="tw:flex tw:justify-between tw:my-4 tw:w-full">
+			<lib-button [config]="btn.cancel()" />
+			<lib-button [config]="btn.save()" />
 		</div>
 	</ng-container>
 </lib-dialog>

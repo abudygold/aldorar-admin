@@ -107,6 +107,10 @@ export class TravelerForm extends BaseForm<ITravelerForm> {
 		const bodyReq = this.id()
 			? this.formModel().traveler
 			: { travelers: this.formModel().travelers };
+
+		this.btn.save().disabled?.update((_) => true);
+		this.btn.cancel().disabled?.update((_) => true);
+
 		this.sendToApi(TRAVELER_URL, bodyReq, {}, () => this.navigateToList());
 	}
 

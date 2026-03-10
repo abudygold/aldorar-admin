@@ -1,0 +1,27 @@
+<lib-table
+	[config]="tableModel"
+	(sortChange)="sortChange($event)"
+	(pageChange)="pageChange($event)">
+	<ng-template #customTemplate let-data="data" let-key="key">
+		@if (key === 'completion') {
+			{{ data.completion }}%
+		} @else if (key === 'paymentStatus') {
+			<app-status-badge [status]="data.paymentStatus" />
+		} @else if (key === 'bookingStatus') {
+			<app-status-badge [status]="data.bookingStatus" />
+		} @else if (key === 'actions') {
+			<div class="tw:flex tw:gap-3">
+				<fa-icon
+					[icon]="faIcon.faEdit"
+					size="lg"
+					class="tw:text-blue-400"
+					(click)="onAction('edit', data?.id)" />
+				<fa-icon
+					[icon]="faIcon.faTrash"
+					size="lg"
+					class="tw:text-red-400"
+					(click)="onAction('delete', data?.id)" />
+			</div>
+		}
+	</ng-template>
+</lib-table>

@@ -1,0 +1,17 @@
+/* Container untuk menjaga rasio atau tinggi */
+.iframe-container {
+	width: 100%;
+	/* Gunakan vh (viewport height) agar responsif terhadap tinggi layar */
+	height: 70vh;
+	display: flex;
+}
+
+.iframe-container iframe {
+	width: 100%;
+	height: 100%;
+	border: none;
+}
+
+::ng-deep .mat-expansion-panel-body {
+	padding: 0 !important;
+}

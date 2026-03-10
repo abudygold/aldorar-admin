@@ -79,3 +79,14 @@ export const PAYMENT_LIST_BREADCRUMB: BreadcrumbModel[] = [
 	DASHBOARD_LINK,
 	{ label: 'pages.payment.label' },
 ];
+
+/* DOCUMENT MENU */
+export const DOCUMENT_LIST_BREADCRUMB: BreadcrumbModel[] = [
+	DASHBOARD_LINK,
+	{ label: 'pages.document.label' },
+];
+
+export const DOCUMENT_EDIT_BREADCRUMB: BreadcrumbModel[] = [
+	DASHBOARD_LINK,
+	{ label: 'pages.document.edit.label' },
+];

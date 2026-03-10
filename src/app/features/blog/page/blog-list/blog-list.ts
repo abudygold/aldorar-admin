@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { Button, Table } from '@devkitify/angular-ui-kit';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { BaseTable } from '../../../../core/common';
+import { BaseAlert, BaseTable } from '../../../../core/common';
 import { BLOG_URL } from '../../../../shared/constant/global';
 import { BLOG_TABLE, CUSTOM_TYPE_BLOG } from '../../../../shared/constant/table';
 
@@ -20,6 +20,9 @@ export class BlogList extends BaseTable {
 	}
 
 	updateBlogStatus(slug: number, isPublish: boolean): void {
-		this.api.put(`${BLOG_URL}/${slug}`, { isPublish }).subscribe(() => this.fetchData());
+		this.api.put(`${BLOG_URL}/${slug}`, { isPublish }).subscribe(() => {
+			BaseAlert('Success!', 'Blog status updated successfully.', 'success');
+			this.fetchData();
+		});
 	}
 }

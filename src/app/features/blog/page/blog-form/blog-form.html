@@ -1,31 +1,37 @@
 <div class="tw:grid">
 	<div class="tw:mb-3">
-		<mat-form-field appearance="outline" class="tw:w-full no-hint">
-			<mat-label>Judul</mat-label>
-			<input matInput placeholder="Judul" [formField]="formData.title" />
-		</mat-form-field>
+		<lib-textbox
+			class="no-hint"
+			[field]="{
+				key: 'title',
+				type: 'textbox',
+				control: $any(formData.title),
+				config: {
+					label: 'Judul',
+				},
+			}" />
 
-		<ng-container
-			[ngTemplateOutlet]="msgValidationTmp"
-			[ngTemplateOutletContext]="{ control: formData.title }" />
+		<app-message-validation [fieldState]="formData.title()" />
 	</div>
 
 	<div class="tw:mb-3">
-		<mat-form-field appearance="outline" class="tw:w-full no-hint">
-			<mat-label>Kategori</mat-label>
-			<mat-select [formField]="formData.categoryId">
-				<mat-option value="">-- Pilih Kategori --</mat-option>
-				@for (option of opt.category(); track $index) {
-					<mat-option [value]="option.id">
-						{{ option.label }}
-					</mat-option>
-				}
-			</mat-select>
-		</mat-form-field>
+		<lib-dropdown
+			class="no-hint"
+			[field]="{
+				key: 'categoryId',
+				type: 'dropdown',
+				control: $any(formData.categoryId),
+				config: {
+					label: 'Kategori',
+					options: {
+						data: opt.category() || [],
+						labelKey: 'label',
+						valueKey: 'id',
+					},
+				},
+			}" />
 
-		<ng-container
-			[ngTemplateOutlet]="msgValidationTmp"
-			[ngTemplateOutletContext]="{ control: formData.categoryId }" />
+		<app-message-validation [fieldState]="formData.categoryId()" />
 	</div>
 
 	<div class="tw:flex tw:gap-4 tw:mb-3">
@@ -53,50 +59,40 @@
 	</div>
 
 	<div class="tw:mb-3">
-		<mat-form-field appearance="outline" class="tw:w-full no-hint">
-			<mat-label>Konten Singkat</mat-label>
-			<textarea matInput [formField]="formData.shortContent"></textarea>
-		</mat-form-field>
+		<lib-textarea
+			class="no-hint"
+			[field]="{
+				key: 'shortContent',
+				type: 'textarea',
+				control: $any(formData.shortContent),
+				config: {
+					label: 'Konten Singkat',
+				},
+			}" />
 
-		<ng-container
-			[ngTemplateOutlet]="msgValidationTmp"
-			[ngTemplateOutletContext]="{ control: formData.shortContent }" />
+		<app-message-validation [fieldState]="formData.shortContent()" />
 	</div>
 
 	<div class="tw:mb-3">
 		<textarea id="editor"></textarea>
 
-		<ng-container
-			[ngTemplateOutlet]="msgValidationTmp"
-			[ngTemplateOutletContext]="{ control: formData.content }" />
+		<app-message-validation [fieldState]="formData.content()" />
 	</div>
 
-	<p><mat-slide-toggle [formField]="formData.isPublish">Publish</mat-slide-toggle></p>
+	<lib-slide-toggle
+		[field]="{
+			key: 'isPublish',
+			type: 'slide-toggle',
+			control: $any(formData.isPublish),
+			config: {
+				label: 'Publish',
+			},
+		}" />
 
 	<hr class="tw:text-gray-300 tw:my-3 tw:shadow" />
 
 	<div class="tw:flex tw:justify-between tw:gap-6 tw:my-4">
-		<button
-			matButton="outlined"
-			class="tw:md:min-w-48!"
-			[disabled]="formData().submitting()"
-			(click)="goBackToList()">
-			Kembali
-		</button>
-		<button
-			matButton="filled"
-			class="tw:md:min-w-48!"
-			[disabled]="formData().submitting()"
-			(click)="handleSubmit()">
-			Submit
-		</button>
+		<lib-button [config]="btn.cancel()" />
+		<lib-button [config]="btn.save()" />
 	</div>
 </div>
-
-<ng-template #msgValidationTmp let-control="control">
-	@if (control().touched() && control().invalid()) {
-		@for (error of control().errors(); track error.kind) {
-			<mat-error>{{ error.message }}</mat-error>
-		}
-	}
-</ng-template>
