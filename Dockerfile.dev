@@ -1,10 +1,10 @@
-FROM node:22-alpine
+FROM nginx:alpine
 
-WORKDIR /app
+# hapus default nginx page
+RUN rm -rf /usr/share/nginx/html/*
 
-COPY dev/dist/browser /app/dist
-
-ENV NODE_ENV=development
+# copy build angular
+COPY dev/dist/browser /usr/share/nginx/html
 
 EXPOSE 80
 
