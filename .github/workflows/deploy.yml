@@ -1,0 +1,154 @@
+name: Deploy Aldorar Admin
+
+on:
+    push:
+        branches: [dev, main]
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Build Angular SSR
+              run: |
+                  if [ "${{ github.ref_name }}" = "main" ]; then
+                    npm run build
+                  else
+                    npm run build -- --configuration=development
+                  fi
+
+            # ==============================
+            # Prepare VPS folders
+            # ==============================
+            - name: Prepare VPS folders
+              uses: appleboy/ssh-action@v1.0.3
+              with:
+                  host: ${{ secrets.VPS_HOST }}
+                  username: ${{ secrets.VPS_USER }}
+                  key: ${{ secrets.VPS_SSH_KEY }}
+                  script: |
+                      if [ "${{ github.ref_name }}" = "main" ]; then
+                        ENV_PATH=${{ secrets.VPS_PATH_PROD }}
+                      else
+                        ENV_PATH=${{ secrets.VPS_PATH_DEV }}
+                      fi
+
+                      mkdir -p $ENV_PATH/dist
+                      echo "✅ Folder ready: $ENV_PATH/dist"
+
+            # ==============================
+            # Upload Docker files
+            # ==============================
+            - name: Upload Docker configs
+              uses: appleboy/scp-action@v0.1.7
+              with:
+                  host: ${{ secrets.VPS_HOST }}
+                  username: ${{ secrets.VPS_USER }}
+                  key: ${{ secrets.VPS_SSH_KEY }}
+                  source: 'docker-compose.yml'
+                  target: ${{ secrets.VPS_BASE_PATH }}
+
+            # ==============================
+            # Upload Dockerfile.dev
+            # ==============================
+            - name: Upload Dockerfile.dev
+              uses: appleboy/scp-action@v0.1.7
+              with:
+                  host: ${{ secrets.VPS_HOST }}
+                  username: ${{ secrets.VPS_USER }}
+                  key: ${{ secrets.VPS_SSH_KEY }}
+                  source: 'Dockerfile.dev'
+                  target: ${{ secrets.VPS_BASE_PATH }}
+
+            # ==============================
+            # Upload Dockerfile.prod
+            # ==============================
+            - name: Upload Dockerfile.prod
+              uses: appleboy/scp-action@v0.1.7
+              with:
+                  host: ${{ secrets.VPS_HOST }}
+                  username: ${{ secrets.VPS_USER }}
+                  key: ${{ secrets.VPS_SSH_KEY }}
+                  source: 'Dockerfile.prod'
+                  target: ${{ secrets.VPS_BASE_PATH }}
+
+            # ==============================
+            # Upload dist to VPS (raw)
+            # ==============================
+            - name: Upload dist to VPS (raw)
+              uses: appleboy/scp-action@v0.1.7
+              with:
+                  host: ${{ secrets.VPS_HOST }}
+                  username: ${{ secrets.VPS_USER }}
+                  key: ${{ secrets.VPS_SSH_KEY }}
+                  source: 'dist/aldorar-admin'
+                  target: '${{ secrets.VPS_BASE_PATH }}/_incoming'
+
+            # ==============================
+            # Prepare dist folder on VPS
+            # ==============================
+            - name: Prepare dist folder on VPS
+              uses: appleboy/ssh-action@v1.0.3
+              with:
+                  host: ${{ secrets.VPS_HOST }}
+                  username: ${{ secrets.VPS_USER }}
+                  key: ${{ secrets.VPS_SSH_KEY }}
+                  script: |
+                      BASE=${{ secrets.VPS_BASE_PATH }}
+
+                      if [ "${{ github.ref_name }}" = "main" ]; then
+                        TARGET=${{ secrets.VPS_PATH_PROD }}/dist
+                      else
+                        TARGET=${{ secrets.VPS_PATH_DEV }}/dist
+                      fi
+
+                      echo "📁 Incoming structure:"
+                      find $BASE/_incoming -maxdepth 3
+
+                      echo "🧹 Cleaning $TARGET"
+                      rm -rf $TARGET/*
+                      mkdir -p $TARGET
+
+                      echo "📦 Copying dist content"
+                      cp -r \
+                        $BASE/_incoming/dist/aldorar-admin/* \
+                        $TARGET/
+
+                      rm -rf $BASE/_incoming
+
+            # ==============================
+            # Restart Docker
+            # ==============================
+            - name: Restart Docker Containers
+              uses: appleboy/ssh-action@v1.0.3
+              with:
+                  host: ${{ secrets.VPS_HOST }}
+                  username: ${{ secrets.VPS_USER }}
+                  key: ${{ secrets.VPS_SSH_KEY }}
+                  script: |
+                      cd ${{ secrets.VPS_BASE_PATH }}
+
+                      if [ "${{ github.ref_name }}" = "main" ]; then
+                        echo "🚀 Deploying production environment"
+                        docker rm -f aldorar-admin-prod
+                        docker image rm -f aldorar-admin:prod
+                        docker compose up -d --build admin-prod
+                      else
+                        echo "🚀 Deploying development environment"
+                        docker rm -f aldorar-admin-dev
+                        docker image rm -f aldorar-admin:dev
+                        docker compose up -d --build admin-dev
+                      fi
+
+                      docker image prune -f
