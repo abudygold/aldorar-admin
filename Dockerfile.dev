@@ -6,6 +6,6 @@ COPY dev/dist/browser /app/dist
 
 ENV NODE_ENV=development
 
-EXPOSE 4300
+EXPOSE 4200
 
 CMD ["nginx", "-g", "daemon off;"]
