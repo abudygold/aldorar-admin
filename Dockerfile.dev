@@ -6,6 +6,6 @@ COPY dev/dist /app/dist
 
 ENV NODE_ENV=development
 
-EXPOSE 4000
+EXPOSE 4300
 
 CMD ["node", "dist/server/server.mjs"]
