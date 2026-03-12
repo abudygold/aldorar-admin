@@ -20,7 +20,7 @@ jobs:
             - name: Install dependencies
               run: npm ci
 
-            - name: Build Angular SSR
+            - name: Build Angular
               run: |
                   if [ "${{ github.ref_name }}" = "main" ]; then
                     npm run build
@@ -81,6 +81,18 @@ jobs:
                   username: ${{ secrets.VPS_USER }}
                   key: ${{ secrets.VPS_SSH_KEY }}
                   source: 'Dockerfile.prod'
+                  target: ${{ secrets.VPS_BASE_PATH }}
+
+            # ==============================
+            # Upload nginx.conf
+            # ==============================
+            - name: Upload nginx.conf
+              uses: appleboy/scp-action@v0.1.7
+              with:
+                  host: ${{ secrets.VPS_HOST }}
+                  username: ${{ secrets.VPS_USER }}
+                  key: ${{ secrets.VPS_SSH_KEY }}
+                  source: 'nginx.conf'
                   target: ${{ secrets.VPS_BASE_PATH }}
 
             # ==============================
