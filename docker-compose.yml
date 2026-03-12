@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile.prod
     ports:
-      - "4200:4200"
+      - "4200:80"
     environment:
       NODE_ENV: production
     restart: always
@@ -18,7 +18,7 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     ports:
-      - "4300:4200"
+      - "4300:80"
     environment:
       NODE_ENV: development
     restart: always
