@@ -1,5 +1,5 @@
 export const environment = {
 	api: {
-		baseUrl: 'http://localhost:3000/',
+		baseUrl: 'https://api-dev.aldorartour.com/',
 	},
 };
