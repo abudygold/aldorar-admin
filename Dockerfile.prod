@@ -1,0 +1,11 @@
+FROM nginx:alpine
+
+# hapus default nginx page
+RUN rm -rf /usr/share/nginx/html/*
+
+# copy build angular
+COPY prod/dist/browser /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
