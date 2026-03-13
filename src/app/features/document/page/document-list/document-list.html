@@ -3,12 +3,24 @@
 	(sortChange)="sortChange($event)"
 	(pageChange)="pageChange($event)">
 	<ng-template #customTemplate let-data="data" let-key="key">
-		@if (key === 'completion') {
+		@if (key === 'documents') {
+			<div class="tw:grid tw:gap-2 tw:m-2">
+				<app-status-badge
+					label="KK"
+					[status]="getDocumentStatus(data.documents, 'family_card')" />
+				<app-status-badge label="KTP" [status]="getDocumentStatus(data.documents, 'ktp')" />
+				<app-status-badge
+					label="Passport"
+					[status]="getDocumentStatus(data.documents, 'passport')" />
+				<app-status-badge
+					label="Vaccine Certificate"
+					[status]="getDocumentStatus(data.documents, 'vaccine_certificate')" />
+				<app-status-badge
+					label="Photo"
+					[status]="getDocumentStatus(data.documents, 'photo')" />
+			</div>
+		} @else if (key === 'completion') {
 			{{ data.completion }}%
-		} @else if (key === 'paymentStatus') {
-			<app-status-badge [status]="data.paymentStatus" />
-		} @else if (key === 'bookingStatus') {
-			<app-status-badge [status]="data.bookingStatus" />
 		} @else if (key === 'actions') {
 			<div class="tw:flex tw:gap-3">
 				<fa-icon

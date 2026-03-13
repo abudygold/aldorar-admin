@@ -2,11 +2,11 @@ import { applyEach, PathKind, SchemaPathTree } from '@angular/forms/signals';
 import { IOptionList } from '../../interface/base';
 
 export type DOC_TYPE = 'passport' | 'ktp' | 'vaccine_certificate' | 'photo' | 'family_card';
-export type DOC_STATUS = 'pending' | 'approved' | 'rejected' | 'need_revision';
+export type DOC_STATUS = 'pending' | 'verified' | 'rejected' | 'need_revision';
 
 export const DOC_STATUS_OPTIONS: IOptionList[] = [
 	{ label: 'Pending', value: 'pending' },
-	{ label: 'Approved', value: 'approved' },
+	{ label: 'Verified', value: 'verified' },
 	{ label: 'Rejected', value: 'rejected' },
 	{ label: 'Need Revision', value: 'need_revision' },
 ];
