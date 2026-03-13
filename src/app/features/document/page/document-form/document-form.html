@@ -8,7 +8,7 @@
 
 						<input
 							matInput
-							[value]="document.fileUrl().value() || document.file().value()?.name"
+							[value]="document.file().value()?.name || document.fileUrl().value()"
 							disabled />
 						<button
 							mat-icon-button

@@ -21,4 +21,8 @@ export class DocumentList extends BaseTable {
 			faCircleXmark,
 		});
 	}
+
+	getDocumentStatus(documents: any[], key: string): string {
+		return documents.find((t: any) => t.documentType === key)?.status || 'pending';
+	}
 }

@@ -6,24 +6,28 @@ import { Component, computed, input } from '@angular/core';
 		<span
 			class="tw:inline-block tw:whitespace-nowrap tw:rounded-[0.27rem] tw:px-[0.65em] tw:pb-[0.25em] tw:pt-[0.35em] tw:text-center tw:align-baseline tw:text-sm tw:font-bold tw:leading-none tw:capitalize"
 			[class]="badgeClass()">
-			{{ statusLabel() }}
+			{{ label() || statusLabel() }}
 		</span>
 	`,
 })
 export class StatusBadge {
 	status = input.required<string>();
+	label = input<string>();
 
 	badgeClass = computed(() => {
 		switch (this.status()) {
 			case 'paid':
 			case 'completed':
+			case 'verified':
 				return 'tw:bg-green-100 tw:text-green-700';
 			case 'partially_paid':
+			case 'need_revision':
 				return 'tw:bg-yellow-100 tw:text-yellow-700';
 			case 'dp_paid':
 			case 'confirmed':
 				return 'tw:bg-blue-100 tw:text-blue-700';
 			case 'cancelled':
+			case 'rejected':
 				return 'tw:bg-red-100 tw:text-red-700';
 			default:
 				return 'tw:bg-gray-100 tw:text-gray-700';

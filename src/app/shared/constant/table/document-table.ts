@@ -1,6 +1,9 @@
 import { TableModel } from '@devkitify/angular-ui-kit';
 
 export const CUSTOM_TYPE_DOCUMENT = {
+	documents: {
+		type: 'custom',
+	},
 	completion: {
 		type: 'custom',
 	},
@@ -20,6 +23,11 @@ DOCUMENT_TABLE.columns = [
 		key: 'packageName',
 		label: 'Package Name',
 		sortable: true,
+	},
+	{
+		key: 'documents',
+		label: 'Document Type',
+		sortable: false,
 	},
 	{
 		key: 'completion',
